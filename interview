@@ -566,7 +566,7 @@ getForObject() : similar to getForEntity(), but returns the resource directly.
 exchange(): executes a specified HTTP method, such as GET, POST, PUT, etc, and returns a ResponseEntity containing both the HTTP status code and the resource as an object.
 
 
---------------------------------------------------------------------------------------------------------
+
 10)resttempalte vs weblcient
 RestTemplate uses Java Servlet API and is therefore synchronous and blocking.
 
@@ -575,7 +575,7 @@ Conversely, WebClient is asynchronous and will not block the executing thread wh
 Sending HTTP requests with Spring WebClient (reflectoring.io)
 
 Use custom httpclient in case of ssl settings
---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 11)@ConditionalOnPRoperty  - create beans based on value in configuration properties file
 
 (prefix = "spring", name = "example.values", havingvalues=”values”)
@@ -623,7 +623,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
 }
 
------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 JPA has features for DDL generation, and these can be set up to run on startup against the database. This is controlled through two external properties:
 spring.jpa.generate-ddl (boolean) switches the feature on and off and is vendor independent.
 spring.jpa.hibernate.ddl-auto (enum) is a Hibernate feature that controls the behavior in a more fine-grained way. See below for more detail.
@@ -720,76 +720,19 @@ Atomicity – all or nothing
 Consistency- constraint check , unique key in a relational database.
 Isolation- one transaction is isolated from other
 Durablity- commit persists
--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 CRUD operations
 Q8)N+1 problem – lazy loading of data from the database happens when a query is made for a parent record, and then an additional query for every single child record.
 1) instead of find all use @Query annotation selction from department left  join fetch p.listofemployees
 2)EntityGraph
 
---------------------------------------------------
+
 Q9)Transaction Rollback-@Transactional( rollbackFor = SQLException.class)
 
 @Transactional(Progration.NEVER, MANDATORY, REQUIRESNEW)
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------Q10) @UniqueConstraint    @Id(Generated value=) – primary key-----
 
-
-------------------------
 SQL  - index for unique constraints -n inner join matches all records between tables but only returns matching values. It is the intersection of two tables. The cross join will display all the rows of both tables.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 SPRING SECURITY
@@ -821,40 +764,6 @@ Gradle
 
 Gradle is more of project life cycle manager with settings.gradle,gradlewrapper inside project
 Gradle don’t need installation – wrapper is doing the job
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -900,17 +809,7 @@ So we should sync these 2 databases and keep sync always.
 
 This can be solve by using Event-Driven Architecture. According to Event Driven Architecture, when something update in write database, it will publish an update event with using message broker systems and this will consume by the read database and sync data according to latest changes.
 
-                    
-
-
-
-
-
-
-
-
-
-
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   
 
@@ -921,73 +820,17 @@ This can be solve by using Event-Driven Architecture. According to Event Driven 
 Kubernetes NodePort vs LoadBalancer vs Ingress? When should I use what? | by Sandeep Dinesh | Google Cloud - Community | Medium
 
 Kubernetes 101: Pods, Nodes, Containers, and Clusters | by Daniel Sanche | Google Cloud - Community | Medium
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
+https://medium.com/google-cloud/kubernetes-101-pods-nodes-containers-and-clusters-c1509e409e16
 
 
 KAFKA
 Top 50 Kafka Interview Questions And Answers for 2023 (simplilearn.com)
 Top Kafka Interview Questions and Answers (2023) - InterviewBit
+
+https://www.simplilearn.com/kafka-interview-questions-and-answers-article
+https://www.interviewbit.com/kafka-interview-questions/
+
 
 Mq- message is not retained, kafka – message is retained [CloudKarafka default: log.retention.hours=168]
 Mq-push pull  model     , kafka – publish , subscription model
