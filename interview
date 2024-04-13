@@ -1,0 +1,1154 @@
+JAVA	1
+MULTITHREADING	7
+JAVA8	9
+SPRINGBOOT	10
+HIBERNATE	12
+JAVA
+Properties	Primitive data types	Objects
+Origin	Pre-defined data types	User-defined data types
+Stored structure	Stored in a stack	Reference variable is stored in stack and the original object is stored in heap
+When copied	Two different variables is created along with different assignment(only values are same)	Two reference variable is created but both are pointing to the same object on the heap
+When changes are made in the copied variable	Change does not reflect in the original ones.	Changes reflected in the original ones.
+Default value	Primitive datatypes do not have null as default value	The default value for the reference variable is null
+Example	byte, short, int, long, float, double, char, boolean	array, string class, interface etc.
+Heap area memory – runtime memory to store objects and metadata –
+   Heapspace – young generation , old genartion objects
+ Permgen space- hold metadata of class - MetaSpace replaced PermGen from java 8- dynamic resizing
+
+Non heap memory – class memory to store static content
+ Class(Method) Area – common across threads
+Class(Method) Area stores per-class structures such as the runtime constant pool, field and method data, the code for methods.
+
+1)How to break Singleton  design pattern
+2)How to prevent Singleton Pattern from Reflection, Serialization and Cloning? - GeeksforGeeks
+
+Overcome reflection issue: To overcome issue raised by reflection, enums are used because java ensures internally that enum value is instantiated only once. Since java Enums are globally accessible, they can be used for singletons. Its only drawback is that it is not flexible i.e it d
+
+Cloneing- clone not supported
+Serialization – read resolve()
+
+SerialVersionUID The Serialization runtime associates a version number with each Serializable class called a SerialVersionUID, which is used during Deserialization to verify that sender and receiver of a serialized object have loaded classes for that object which are compatible with respect to serialization. If the receiver has loaded a class for the object that has different UID than that of corresponding sender’s class, the Deserialization will result in an InvalidClassException.
+
+How to Create an Immutable Class in Java with Example | Programming Mitra
+Immutable- final variables, final methods, copy constructor, no setter- used for concurrent programming
+where immutability makes an especially big difference is concurrency: immutable objects can safely be shared among multiple threads, whereas mutable objects must be made thread-safe via careful design and implementation - usually this is far from a trivial task.
+---------------------------------------------------------------------------------------------------------------------
+3)Java difference between abstract class and interface
+   Static methods in interface – utility methods only at interface level
+   Default metods in interface[how to solve diamond problem] – multiple inheritance using interface only not class
+Interfacenmae.super.method()- 
+f any backward compatability is required place it inside default method.
+ it is not mandatory to override (provide body) it in the classes that are already implementing this interface.
+  
+Interface  is implicit public static final
+Enum implicit static final
+-----------------------------------------------------------------------------------------------------------------
+4)Java Comparision	
+Java | ==, equals(), compareTo(), equalsIgnoreCase() and compare() - GeeksforGeeks
+Why to Override equals(Object) and hashCode() method ? - GeeksforGeeks
+
+String literal created in string pool reusing object references String new=”string”
+String is immutable - The String is safe for multithreading because of its immutableness. Different threads can access a single “String instance”. It removes the synchronization for thread safety because we make strings thread-safe implicitly.
+
+No way to ged rid of it after use – garbage collection do the job – security concern – use char array in case of password
+
+Java equals()--- only compare & compareTo methods use Unicode & ascii based comparison to sort values
+
+The java equals() is a method of lang.Object class, and it is used to compare two objects.
+To compare two objects that whether they are the same, it compares the values of both the object's attributes.
+By default, two objects will be the same only if stored in the same memory location.
+ ----------------------____________________________________--------------------------------------------
+5)Has -a vs is-a Relation
+
+Association is relationship between two classes in java
+ It can be is a relationship example- inheritance- unidirectional – not dependent of each other
+Has – a relationahsip – composition- object reference of another class- dp[endent of each other
+
+ 
+
+
+
+This shows that class Pulsar Has-a an engine. By having a different class for the engine, we don’t need to put the whole code that has a place with speed inside the Van class, which makes it conceivable to reuse the Speed class in numerous applications.
+
+Class car{
+
+String price;
+String type;
+
+}
+
+Class Engine{
+
+Public start(){
+
+}
+
+
+
+
+class Maserati extends Car {
+  
+    // Method in which it is shown
+    // what happened with the engine of Puslar
+    public void MaseratiStartDemo()
+    {
+        // Creating an object of Engine type
+        // using stop() method
+        // Here, MaseratiEngine is name of an object
+        Engine MaseratiEngine = new Engine();
+        MaseratiEngine.start();
+        MaseratiEngine.stop();
+    }
+}
+----------------------------------------------------------------------------------------------------------------------
+6)override private/static methods in java
+Private method – not visible in child class
+Static method-  override same method- will hide super class- method hidng
+7)finally wont execute when System.exit
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+8)covariant return type-
+9)Java 8 Comparator example with lambda - HowToDoInJava
+Comparator vs comparable interface
+Comparable interface- natural order uses compare to(object obj)- compares with itself
+Comparator- compare(obje1,obj2)-compare two different objects
+
+
+
+10)Garbage collection – gc invokes finalze() – identifies object not in use -object= null eligible for gc
+
+
+___________________------------------------------------------------------------------------------------------------------------------------
+11)AOP – cross cutting operations with the help of some interceptors
+@Apsect – class level annotation  all the @Advice will be method
+
+Point cut expression - condition
+@Before(value=exection – packagename.method)     
+@JointPoint – where this advice is implemented
+
+
+@Before()
+Public void beforeAdvice(JointPoint jionpoint){
+Jointpoint.getmethod()
+}
+
+
+
+
+Best use case is logging in controller , service layer with start , stop
+
+
+
+
+
+
+
+
+
+
+Collections
+
+
+
+
+ 
+
+terators are used in the Collection framework in Java to retrieve elements one by one. There are three iterators in Java
+Enumeration
+Iterator
+ListIterator
+
+Enumerator
+Enumeration is for legacy classes(Vector, Hashtable) only. Hence it is not a universal iterator.
+Remove operations can’t be performed using Enumeration.
+Only forward direction iterating is possible.
+numeration e = v.elements();
+
+Iterator
+Iterator itr = c.iterator();
+Only forward direction iterating is possible.
+Replacement and addition of new element is not supported by Iterator.
+ListIterator
+It is only applicable for List collection implemented classes like ArrayList, LinkedList, etc. It provides bi-directional iteration.
+
+Difference between the two traversals 
+In for-each loop, we can’t modify collection, it will throw a ConcurrentModificationException on the other hand with iterator we can modify collection. 
+ 
+Modifying a collection simply means removing an element or changing content of an item stored in the collection. This occurs because for-each loop implicitly creates an iterator but it is not exposed to the user thus we can’t modify the items in the collections.
+FAQ
+Arraylist  vs Vector
+
+Performance: ArrayList is faste
+Data Growth: ArrayList and Vector both grow and shrink dynamically to maintain optimal use of storage – but the way they resize is different. ArrayList increments 50% of the current array size if the number of elements exceeds its capacity, while vector increments 100% – essentially doubling the current array size.
+Traversal: Vector can use both Enumeration and Iterator for traversing over elements of vector while ArrayList can only use Iterator for traversing.
+Synchronization : Vector is synchronized, which means only one thread at a time can access the code, while arrayList is not synchronized, 
+ArrayList	LinkedList
+This class uses a dynamic array to store the elements in it. With the introduction of generics, this class supports the storage of all types of objects.	This class uses a doubly linked list to store the elements in it. Similar to the ArrayList, this class also supports the storage of all types of objects.
+Manipulating ArrayList takes more time due to the internal implementation. Whenever we remove an element, internally, the array is traversed and the memory bits are shifted.	Manipulating LinkedList takes less time compared to ArrayList because, in a doubly-linked list, there is no concept of shifting the memory bits. The list is traversed and the reference link is changed.
+This class implements a List interface. Therefore, this acts as a list.	This class implements both the List interface and the Deque interface. Therefore, it can act as a list and a deque.
+
+This class works better when the application demands storing the data and accessing it.	This class works better when the application demands manipulation of the stored data.
+
+
+\
+Differences between TreeMap, HashMap and LinkedHashMap in Java
+ 
+HashMap: HashMap offers 0(1) lookup and insertion
+public class HashMap extends AbstractMap 
+implements Map,Cloneable, Serializable
+A HashMap contains values based on the key.
+It contains only unique elements.
+It may have one null key and multiple null values.
+It maintains no order.
+LinkedHashMap
+public class LinkedHashMap extends HashMap 
+implements Map
+A LinkedHashMap contains values based on the key.
+It contains only unique elements.
+It may have one null key and multiple null values.
+It is same as HashMap instead maintains insertion order.
+3.TreeMap: TreeMap offers O(log N) lookup and insertion. Keys are ordered, so if you need to iterate through the keys in sorted order, you can. This means that keys must implement the Comparable interface. TreeMap is implemented by a Red-Black Tree. 
+A TreeMap contains values based on the key. It implements the NavigableMap interface and extends AbstractMap class.
+It contains only unique elements.
+It cannot have null key but can have multiple null values.
+It is same as HashMap instead maintains ascending order(Sorted using the natural order of its key).
+
+Hashtable: “Hashtable” is the generic name for hash-based maps. 
+Syntax: 
+public class Hashtable extends Dictionary implements
+Map, Cloneable, Serializable
+ 
+A Hashtable is an array of list. Each list is known as a bucket. The position of bucket is identified by calling the hashcode() method. A Hashtable contains values based on the key.
+It contains only unique elements.
+It may have not have any null key or value.
+It is synchronized.
+It is a legacy class.
+WeakHashMap
+
+WeakHashMap is an implementation of the Map interface. WeakHashMap is almost same as HashMap except in case of WeakHashMap, if object is specified as key doesn’t contain any references- it is eligible for garbage collection even though it is associated with WeakHashMap. i.e Garbage Collector dominates over WeakHashMap.
+
+Map.put(key,value);
+Map.put(4,value);
+Map.get(4)=null;
+System.put(d," Hi ");
+WeakHashMap m = new WeakHashMap();
+        Demo d = new Demo();
+         
+        // puts an entry into WeakHashMap
+
+        System.out.println(m);
+         
+        d = null;
+         m.gc  // not eligible for garbage collection in case of hashmap & null is valid key in hash map value of hashcode*null=0;
+
+Internal working of Hash map
+Internal Working of HashMap in Java - GeeksforGeeks
+index = hashCode(key) & (n-1).
+Initial Load=16
+Threshold=12;
+Resizing value=.75*16=12
+A bucket is one element of HashMap array. It is used to store nodes
+ 
+Node in a hashmap has
+{
+  int hash = 115
+  Key key = {"sachin"}
+  Integer value = 30
+  Node next = null
+}
+
+
+
+
+map.put(new Key("vishal"), 20);
+
+
+
+Steps: 
+Calculate hash code of Key {“vishal”}. It will be generated as 118.
+Calculate index by using index method it will be 6.
+Create a node object as : 
+ 
+In Case of collision: Now, putting another pair that is,
+If keys are same, replace the value with current value.[hence no duplicates in hashmap]
+Otherwise connect this node object to the previous node object via linked list and both are stored at index 6. 
+ 
+ 
+map.put(new Key("vaibhav"), 40);
+ 
+
+
+All three criteria in the contract of hashCode() mention in some ways the equals() method:
+internal consistency: the value of hashCode() may only change if a property that is in equals() changes
+equals consistency: objects that are equal to each other must return the same hashCode
+collisions: unequal objects may have the same hashCode
+
+
+map.get()
+repeat same steps to  calculate index from key
+
+Go to index 3 of array and compare first element’s key with given key. If both are equals then return the value, otherwise check for next element if it exists.
+
+Here equals methods helps to get exact value for the key though it has same hashcode.
+When getting an object with its key, the linked list is traversed until the key matches or null is found on next field.
+
+
+HashSet
+
+HAshset internally uses hashmap
+
+Actually the value we insert in HashSet acts as a key to the map Object and for its value, java uses a constant variable. So in the key-value pair, all the values will be the same.
+/ add method 
+    // it calls put() method on map object
+    // and then compares it's return value with null
+    public boolean add(E e) {
+        return map.put(e, PRESENT)==null;
+    }
+ 
+specified as it’s key and constant Object called “PRESENT” 
+
+Duplicates not allowed in set -  
+we know in a HashMap each key is unique and when we call put(Key, Value) method, it returns the previous value associated with key, or null if there was no mapping for key. So in add() method we check the return value of map.put(key, value) method with null value.
+Objects that you insert in HashSet are not guaranteed to be inserted in the same order. Objects are inserted based on their hash code.
+
+
+Iterator.remove() – no exception- checks for modcount
+List.remove()-concurrentModificationException
+final void checkForComodification() {
+        if (modCount != expectedModCount)
+            throw new ConcurrentModificationException();
+    }
+
+enhanced for loop uses an Iterator internally to traverse elements in a Collection, running the above code causes a ConcurrentModificationException since the remove() method of the Collection is used instead of the iterator:
+
+
+
+
+MULTITHREADING
+
+Q-1 What is the difference between the start() and run() method?
+First, both methods are operated in general over the thread. So if we do use threadT1.start() then this method will look for the run() method to create a new thread. While in case of theadT1.run() method will be executed just likely the normal method by the “Main” thread without the creation of any new thread.
+Note: If we do replace start() method with run() method then the entire program is carried by ‘main’ thread.
+ Can we Overload run() method? What if we do not override the run() method?
+
+We can overload the run() method but start() method will call no argument run() only. Hence, it will be of no help to us and is is considered as bad practice. 
+---------------------------------------------------------------------------------------------------------------------
+Q-2 Can we Override the start() method?
+Even if we override the start() method in the custom class then no initializations will be carried on by the Thread class for us. The run() method is also not called and even a new thread is also not created.
+Thread Class vs Runnable Interface 
+If we extend the Thread class, our class cannot extend any other class because Java doesn’t support multiple inheritance. But, if we implement the Runnable interface, our class can still extend other base classes.
+We can achieve basic functionality of a thread by extending Thread class because it provides some inbuilt methods like yield(), interrupt() etc. that are not available in Runnable interface.
+Using runnable will give you an object that can be shared amongst multiple threads. 
+
+-------------------------------------------------------------------------------------------------------------------------
+
+Q3)Join
+If any executing thread t1 calls join() on t2 i.e; t2.join() immediately t1 will enter into waiting state until t2 completes its execution.
+Giving a timeout within join(), will make the join() effect to be nullified after the specific timeout.
+
+
+
+If t is a Thread object whose thread is currently executing, then t.join() will make sure that t is terminated before the next instruction is executed by the program—to maintain sequence of execution of thread.
+
+
+-------------------------------------------------------------------------------------------------------------------
+Q4)Wait[used in synchronized  block]
+
+Wait() should be called only from Synchronized context.	There is no need to call sleep() from Synchronized context.
+
+Sleep:
+[refer deadlock]
+Thread.sleep- calling thread goes to blocked state
+--------------------------------------------------------------------------------------------------------------
+Q5)Completable Future – Future blocking execution without error hanlling ->ListenableFuture with error handling non blockingcompletable Future enhances with java 8 function chaining
+
+Yes! CompletableFuture executes these tasks in a thread obtained from the global ForkJoinPool.commonPool().
+listenablefuture – callback on complete and failure – aync process enabled
+future – aync response will be locked till complete
+Executor executor= new fixedthread();
+Future<Object> future=Executore.submit(callable);
+
+Callable vs runnable
+
+
+java - Listenablefuture vs Completablefuture - Stack Overflow
+https://www.callicoder.com/java-8-completablefuture-tutorial/
+
+
+ 
+
+
+
+wait() Method in Java With Examples - GeeksforGeeks
+wait is used in synchronized context with notify and notify all
+join is to pause execution of thread to die , to ensure sequence of execution of theread like t1.join ()t2).
+Differences between wait() and join() methods in Java - GeeksforGeeks
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+In java, synchronized methods and blocks allow only one thread to acquire the lock on a resource at a time. So, when wait() method is called by a thread, then it gives up the lock on that resource and goes to sleep until some other thread enters the same monitor and invokes the notify() or notifyAll() method.
+--------------------------------------------------------------------------------------------------------------------
+Q5)Calling notify() wakes only one thread and calling notifyAll() wakes up all the threads on the same object. Calling both these methods does not give up the lock on the resource, rather its job is to wake up the threads that have been sent to the sleep state using wait() method.
+
+Thread.wait();calling htread acquired lock, once done notify
+Wait()	notify()
+When wait() is called on a thread holding the monitor lock, it surrenders the monitor lock and enters the waiting state.	When the notify() is called on a thread holding the monitor lock, it symbolizes that the thread is soon going to surrender the lock.
+There can be multiple threads in the waiting state at a time.	One of the waiting threads is randomly selected and notified about the same. The notified thread then exits the waiting state and enters the blocked state where it waits till the previous thread has given up the lock and this thread has acquired it. Once it acquires the lock, it enters the runnable state where it waits for CPU time and then it st
+-------------------------------------------_____________________________________________________
+Q6yield() basically means that the thread is not doing anything particularly important and if any other threads or processes need to be run, they should run. Otherwise, the current thread will continue to run.
+
+Deals with thread PRIORITY
+
+
+`````````````````````````````````````````````````````````````````````````````````````
+
+Q7)Deadlock
+
+Avoid Nested Locks : This is the main reason for dead lock.
+public static Object cacheLock = new Object();
+  public static Object tableLock = new Object();
+  ...
+  public void oneMethod() {
+    synchronized (cacheLock) {
+      synchronized (tableLock) { 
+        doSomething();
+      }
+    }
+  }
+  public void anotherMethod() {
+    synchronized (tableLock) {
+      synchronized (cacheLock) { 
+        doSomethingElse();
+      }
+    }
+  }
+
+Q9) the transient keyword is used during serialization of Java object while volatile is related to the visibility of variables modified by multiple threads during concurrent programming.
+The Volatile keyword is used to mark the JVM and thread to read its value from primary global memory and not utilize cached value present in the thread stack. It is used in concurrent programming in java.
+
+Static vs volatile - . So the volatile variable will have only one main copy which will be updated by different threads and update made by one thread to the volatile variable will immediately reflect to the other Thread. – volatile update object value in cache
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+JAVA8
+
+
+!)Lambda expression and functional interface
+2)Lambda expression with collection
+3)Anonymous inner classes with lambda expression
+new runnable({
+@overide
+}
+)
+4)Predicate,Funciton,Consumer,Supplier
+-predefined functional interface
+5)	Streams
+6)java 8 stream limit,skip[select first n,select last n]
+Predicate,
+Functional Interfaces: Predicate, Consumer, Function, and Supplier - Javagyansite
+Java8 optional .Optional.of()- null pointer exception if the argument passed is nullOptional is a container to hold null/ non null values\kdl
+Functional interfcace- interface with only one abstract method- eg runnable,predicate,function,supplier
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SPRINGBOOT
+
+REST:
+
+java - @RequestParam vs @PathVariable - Stack Overflow
+1) @RequestParam is used to extract query parameters
+http://localhost:3000/api/group/test?id=4
+
+@GetMapping("/group/test")
+public ResponseEntity<?> test(@RequestParam Long id) {
+    System.out.println("This is test");
+    return ResponseEntity.ok().body(id);
+}
+while @PathVariable is used to extract data right from the URI:
+http://localhost:3000/api/group/test/4
+
+@GetMapping("/group/test/{id}")
+public ResponseEntity<?> test(@PathVariable Long id) {
+    System.out.println("This is test");
+    return ResponseEntity.ok().body(id);
+}
+---------------------------------------------------------------------------------------------------------------------------
+2) @RequestParam is more useful on a traditional web application where data is mostly passed in the query parameters while @PathVariable is more suitable for RESTful web services where URL contains values.
+3) @RequestParam annotation can specify default values if a query parameter is not present or empty by using a defaultValue attribute, provided the required attribute is false:
+@RestController
+@RequestMapping("/home")
+public class IndexController {
+
+    @RequestMapping(value = "/name")
+    String getName(@RequestParam(value = "person", defaultValue = "John") String personName) {
+        return "Required element of request param";
+    }
+
+}
+------------------------------------------------------------------------------------------------------------------
+4)Dependecy injection
+Why You Should Use Constructor Injection in Spring (reflectoring.io)
+
+i)contructor based injection – all dependencies are available – most suitable for immutable- create at the time of object creation.
+
+Before Spring 4.3, we had to add an @Autowired annotation to the constructor. With newer versions, this is optional if the class has only one constructor.i
+ii)Getter setter injection – optional dependencies 
+  required dependencies are provided as field parameters in a class
+class 1{
+private field1;
+private Class 2;
+//add getter and setter for class 2
+getFields2(){
+
+}
+@Autowired
+setFields2({
+this.fileld2=field2;
+}
+
+e have added the @Autowired annotation to both the setter and the field. In this case, Spring injects dependency using the setter injection method.
+iii)Field injection using autowired – spring find the dependcies of the field using Reflection 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6) How to Use Profiles in Spring Boot - DZone Java
+
+Spring.profile.active=dev
+
+@Profile(“dev”)
+7)Resileine Framework  i)retry  ii)blockhead iii)ratelimit iv)circuit breaker
+
+
+@Retry(fallbackmethodname=’’}
+@CircuitBreaker(name=cirucitbreakername,fallbackmethod-‘’)
+Resilent4j:
+ Circuitbreaker:
+   Instancename:
+      Circuitbreakername:
+           Threadsholdrate:
+            Minimumnumberofcalls:
+            Waitdurationtoopenstate:in seconds
+            Automatictransitiontoopenstate:true
+            Halfopennumberofcalls:
+
+@Bulkhead(name=;😉)
+resilience4j.bulkhead.instances.bulkheadApi.max-concurrent-calls=3
+resilience4j.bulkhead.instances.bulkheadApi.max-wait-duration=1
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+8)cloud gateway + service discovery 
+@EnableEurekaServer – service discocvery
+ 
+@EnableEurekaClient in cloud gatway and all other serices which has to be routed by application name
+
+  Spring:
+     Apllicaton:
+       Name:
+    Cloud:
+        Gateway:
+       Id:application name of corresponding service
+        Uri:
+________________------------------------------------------------------------------------------------------------------------------------
+9)Resttemplate
+A Guide to the RestTemplate | Baeldung
+
+
+getForEntity(): executes a GET request and returns an object of ResponseEntity class that contains both the status code and the resource as an object.
+
+getForObject() : similar to getForEntity(), but returns the resource directly.
+
+exchange(): executes a specified HTTP method, such as GET, POST, PUT, etc, and returns a ResponseEntity containing both the HTTP status code and the resource as an object.
+
+
+--------------------------------------------------------------------------------------------------------
+10)resttempalte vs weblcient
+RestTemplate uses Java Servlet API and is therefore synchronous and blocking.
+
+Conversely, WebClient is asynchronous and will not block the executing thread while waiting for the response to come back. The notification will be produced only when the response is ready.
+
+Sending HTTP requests with Spring WebClient (reflectoring.io)
+
+Use custom httpclient in case of ssl settings
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+11)@ConditionalOnPRoperty  - create beans based on value in configuration properties file
+
+(prefix = "spring", name = "example.values", havingvalues=”values”)
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+12)
+
+, In Spring, ApplicationContext is an interface that provides configuration for an application. It can be used to get registered beans, messages, and application information. S
+---------------------------------------------------------------------------------
+Q13)
+@Autowired@Qualtifier(“service2”) – similar to autowire incase of ambiguity - NoUniqueBeanFoundException
+
+t if both the @Qualifier and @Primary annotations are present, then the @Qualifier annotation will have precedence. Basically, @Primary defines a default, while @Qualifier is very specif
+
+
+
+
+
+
+
+HIBERNATE
+
+We have also added an H2 database dependency, which is a Java-based, in-memory database. Spring Boot, by default, connects to an H2 database, if the database is available on the class path. In other words, we do not need to provide any connection details for this database.
+
+@Entity  -  table
+
+@Column annotation
+
+@JPARepository
+Inheritance Startegies - InheritanceType.SINGLE_TABLE
+Several classes are sometimes mapped to a single table, and vice versa. In these cases, we devise an inheritance approach. 
+In
+CASCADe(Optional) The operations that must be cascaded to the target of the association.
+By default no operations are cascaded.--__
+Propagation defines our business logic's transaction boundary. Spring manages to start and pause a transaction according to our propagation setting. This is about transaction object to be created/ reused at hibernate context.
+
+Spring calls TransactionManager::getTransaction to get or create a transaction according to the propagation. It supports some of the propagations for all types of TransactionManager,_____-----------------___________________-----------------------------------------------------------------------------------------------------
+
+
+Create JPA Repository-> provides out of box implementation and takes care of entity manager in hibernate
+
+Next, we will write a repository interface which extends from JpaRepository. Interestingly, we have not added any methods to this interface nor are we going to provide any implementation class for this. This is because Spring Boot Data JPA autoimplements this interface.
+@Repository
+
+public interface StudentRepository extends JpaRepository<Student, Long> {
+
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+JPA has features for DDL generation, and these can be set up to run on startup against the database. This is controlled through two external properties:
+spring.jpa.generate-ddl (boolean) switches the feature on and off and is vendor independent.
+spring.jpa.hibernate.ddl-auto (enum) is a Hibernate feature that controls the behavior in a more fine-grained way. See below for more detail.
+Hibernate property values are: create, update, create-drop, validate and none:
+create – Hibernate first drops existing tables, then creates new tables
+update – the object model created based on the mappings (annotations or XML) is compared with the existing schema, and then Hibernate updates the schema according to the diff. It never deletes the existing tables or columns even if they are no more required by the application
+create-drop – similar to create, with the addition that Hibernate will drop the database after all operations are completed. Typically used for unit testing
+validate – Hibernate only validates whether the tables and columns exist, otherwise it throws an exception
+none – this value effectively turns off the DDL generation
+
+
+###########################################################################################
+
+Q1)why hibernate?
+1)eliminates boiler plate code
+2)provides transaction management implicitly
+3)Supports caching
+4)provides ORM mapping
+5)Throws JDBC exception or Hibernate Exception which are unchecked exceptions
+Q2) Session and session factory
+
+Session – interface to connect to database, provides crud operations[ session.save()]
+SessionFactory -initialize once cache it and reuse again – one sessionfactory per database connection
+SessionFactory get session 
+Session session=sessionfactory.getSession();
+Transaction =session.getTransaction
+Session,.save()
+t.commit;
+factory.close; session.close
+
+
+
+
+
+
+
+
+
+Q3)Mapping in hiberate
+
+1)OnetoOne mapping – straightforward one to one entity- similar to document in mongodb
+
+2)OnetoMAny mapping keeping foreign key in a single column  similar to join 
+
+3)ManytoOne Mapping
+
+4)ManytoMany mapping
+//address_add_id - default fk column name
+@OneToOne(cascade = CascadeType.ALL)
+@JoinColumn(name = "fk_add_id")
+
+
+// for bidirectional one to one mapping
+//@OneToOne(mappedBy = "address")
+//private Employee employee;
+
+//unidirectional one-to-many
+@OneToMany(cascade = CascadeType.ALL)
+@JoinColumn(name = "fk_emp_id",referencedColumnName = "emp_id")
+private List<Address> address;
+
+
+@ManyToOne
+@JoinColumn(name = "fk_emp_id")
+private Employee employee2;
+
+
+@ManyToMany
+@JoinTable(name = "employee_project",
+        joinColumns = @JoinColumn(name = "employee_id"),
+        inverseJoinColumns = @JoinColumn(name = "project_id")
+)
+
+@ManyToMany(mappedBy = "assignedProjects")
+    private Set<Employee> employeeSet = new HashSet<>();
+
+
+
+
+Q4) currentsession – close once session factory is closed – context of hibernate
+Opensession – opens new session
+
+Q5) get vs load
+
+Laod supports lazy loading and throws exception in case of data not found
+Q6)Caching
+  First level cahce – associated with session object  - enabled by default	
+  Second level cache – disabled by – enabe using @Cahce annotation at entity – eg EHCache
+
+
+Q7)ACID
+
+Atomicity – all or nothing
+Consistency- constraint check , unique key in a relational database.
+Isolation- one transaction is isolated from other
+Durablity- commit persists
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CRUD operations
+Q8)N+1 problem – lazy loading of data from the database happens when a query is made for a parent record, and then an additional query for every single child record.
+1) instead of find all use @Query annotation selction from department left  join fetch p.listofemployees
+2)EntityGraph
+
+--------------------------------------------------
+Q9)Transaction Rollback-@Transactional( rollbackFor = SQLException.class)
+
+@Transactional(Progration.NEVER, MANDATORY, REQUIRESNEW)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------Q10) @UniqueConstraint    @Id(Generated value=) – primary key-----
+
+
+------------------------
+SQL  - index for unique constraints -n inner join matches all records between tables but only returns matching values. It is the intersection of two tables. The cross join will display all the rows of both tables.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SPRING SECURITY
+
+1)websecurity configuration adaptor- http filter for mvc with build in UserService
+
+Token mehcanims-jwt -authentication mechanism
+OUTH-authorization protocal which will use tokens as well
+
+1)OUTH Resource owner-grant access
+2)Authoriztion server--  doing token validation
+
+
+Microservices
+Eureka server- register clients
+
+MongoDb
+
+
+Mongotemplate vs MongoRepository
+CICD
+
+Gradle vs maven
+mvn dependency:tree  - to resolve dependency conflict
+Gradle- not specifto to any language
+Maven- java specfic
+Gradle- creates a loca
+Gradle
+
+Gradle is more of project life cycle manager with settings.gradle,gradlewrapper inside project
+Gradle don’t need installation – wrapper is doing the job
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DESIGN PATTERNS
+
+SOLID principle
+S- single responsibility – to the point
+O- open closed  open for extension closed for modification
+L- liskov substitution
+I interface segregation- split larger interface to smaller one
+D- Dependency Inversion – move away from new dependency
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+SAGA
+Sagas (microservices.io)
+
+Saga Pattern for Microservices Distributed Transactions | by Mehmet Ozkaya | Design Microservices Architecture with Patterns & Principles | Medium
+
+To mange distributed transactions across services per database
+i)publish/subscribe model where transaction status is published from each layer
+ii)centralized microservice controller – but this will be single point of failure.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CQRS Design Pattern in Microservices Architectures | by Mehmet Ozkaya | Design Microservices Architecture with Patterns & Principles | Medium
+
+We can use CQRS design pattern in order to avoid complex queries to get rid of inefficient joins.
+
+  
+So we can say that CQRS separates reads and writes into different databases, Commands performs update data, Queries performs read data.
+
+Commands should be actions with task-based operations like “add item into shopping cart” or “checkout order”. So commands can be handle with message broker systems that provide to process commands in async way.
+
+Queries is never modify the database. Queries always return the JSON data with DTO objects. By this way, we can isolate the Commands and Queries.
+
+
+
+
+How to Sync Databases with CQRS ?
+But when we separate read and write databases in 2 different database, the main consideration is sync these two database in a proper way.
+
+So we should sync these 2 databases and keep sync always.
+
+This can be solve by using Event-Driven Architecture. According to Event Driven Architecture, when something update in write database, it will publish an update event with using message broker systems and this will consume by the read database and sync data according to latest changes.
+
+                    
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+ DOCKER/KUBERNETES
+
+
+Kubernetes NodePort vs LoadBalancer vs Ingress? When should I use what? | by Sandeep Dinesh | Google Cloud - Community | Medium
+
+Kubernetes 101: Pods, Nodes, Containers, and Clusters | by Daniel Sanche | Google Cloud - Community | Medium
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+KAFKA
+Top 50 Kafka Interview Questions And Answers for 2023 (simplilearn.com)
+Top Kafka Interview Questions and Answers (2023) - InterviewBit
+
+Mq- message is not retained, kafka – message is retained [CloudKarafka default: log.retention.hours=168]
+Mq-push pull  model     , kafka – publish , subscription model
+
+Since Rabbitmq is a message queue, messages are done away with once consumed and the acknowledgement is sent.
+Ordering of messages not possible in mq
+
+Since Kafka is a log, the messages are always present there. We can have a message retention policy for the same.
+
+Topic- this is where message is published from producer.
+Consumer – group of consumers who are going to consume the given topic
+
+Same message in a topic can be consumed by multiple consumers which is published to multiple topics
+Same consumer can consume multiple topic
+
+1)offset - What is the role of the offset?
+In partitions, messages are assigned a unique ID number called the offset. The role is to identify each message in the partition uniquely.
+
+2)Partition group – enables parallel reading of messages from consumer group.
+
+3)Cluster – group of kafka servers to provide fault tolerance.
+
+4)In sync replica - In-Sync Replica (ISR) is a replica that is up to date with the partition leader.
+
+5)Zookeeper – cluster manager -topology changes in topic and consumer then notify to all – assign leader and followers in a partition group.
+
+6)schema registry – ensures compatibility between producer and consumer – send schema id instead of entire schema to validate
+
+7) message key – each record have unique key and value - The producer will always choose the same partition for two records with the same key. It is used to maintain order.
+
+8)kafka performance tuning
+  1)throughput – number of messages processed per unit time
+   2)latency – time taken to process one message.
+
+
+9)Override listen method to send acknowledgment
+
+Also, note that the annotated methods can also specify the following parameters:
+
+ConsumerRecord: to access the raw Kafka message.
+Acknowledgment: to manually acknowledge the message.
+@Payload: binds a method parameter to the payload of a message.
+@Header: binds a method parameter method to a message header.
+
+@KAfkalistenter(Topicname=””)
+Process(ConsumerRecord<k,,v>){
+}
+@OVeride
+Listen(Acknowledge,,ent ack)
+{
+Acknowledgment.ack();
+}
+10) 10
+
+Setting the auto.offset.reset=earliest, AND a fixed group.id=something in the consumer config will start the consumer at the last committed offset. In your case it should start consuming at the first message at 7:20. If you want it to start reading messages posted AFTER it starts, then the auto.offset.reset=latest will ignore the 10 messages sent at 7:20 and read any that come in after it starts.
+
+
+
+
+
+
+
+
+
+
+
+
+PROJECT
+
+Incoming webhook request ->/submit events API Gateway -> [https:routeurl-[p2p]-- > https:apigee.wf.cm/submitevents
+  
+  httpclient - SSL config ->
+  SSL ->venafi-->keystore
+  PCF deployment - > managerered containerer  ->https:routeurl-[p2p
+  
+  
+  
+  
+  https:
+  
+  json- data 
+  
+  {
+  id:unique webhook id
+  e
+  ventType:LOGIN,LOAN,DOCUMENT
+  {
+  
+  
+  }
+  
+  }
+  
+  produce kafka event of type LOGIN ->
+  
+  Componenets
+  
+  WebHookListerService - for handling events from conumer
+  ACAPS EVentService - for hanlding events from core product->
+  
+  PLDCS Cusumer service -  @KafkaListenr<>->loan data ->logic ->
+
+ICMPDocuemntService - for uplaoding and documents with help of documents  ------>Enterprise Docuement service
+
+
+  
+  splunk
+  
+  blend->fulfilment ->publich ->acaps>
+  
+  traceid - > slueth framework- transcaiotn
+  spanid- >
+  
+  
+  header append
+  
+  
+  
+  //
+  
+  application- realtimerety=
+  Resielienj4j - Retry  (fallback =''){
+  
+  
+  
+  }
+  
+  entitry of webhook will be similar to that of kakfa message entity
+  Mongorepository to persist error transacttion{
+  
+  //
+  event data
+  
+  }
+  
+  
+  
+  
+  common config -which will change over env
+  
+  pipline config
+  
+  github- gradle->jenkins ->ucd manager->deploy to PCF
+  
+  
+  VCAPSERVICES - environment mapping ucd
+  
+  key value
+  db    mongouri
+  
+  
+  
+  application.yml
+  :
+  
+  database:{db}.
+  
+  -----------------
+  artifactory -> jfrog.wellsfargo.com
+  
+  jar
+  
+  Mockito - > stubbing
+  
