@@ -2,6 +2,67 @@ ADVANCED QUESTIONS
 
 1)webclient with https , flux
 2)Reusable services to be used by multiple business groups / springboot library creation
+https://spring.io/guides/gs/multi-module
+
+ Spring Boot lets you wire beans that you may not be aware you need. It also showed how to turn on convenient management services.
+However, Spring Boot does more than that. It supports not only traditional WAR file deployments but also lets you put together executable JARs, thanks to Spring Boot’s loader module. The various guides demonstrate this dual support through the spring-boot-gradle-plugin and spring-boot-maven-plugin.
+
+
+The Library project has no class with a main method (because it is not an application). Consequently, you have to tell the build system to not try to build an executable jar for the Library project. (By default, the Spring Initializr builds executable projects.)
+
+To tell Maven to not build an executable jar for the Library project, you must remove the following block from the pom.xml created by the Spring Initializr:
+
+<build>
+  <plugins>
+    <plugin>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-maven-plugin</artifactId>
+    </plugin>
+  </plugins>
+</build>
+
+
+
+gradle option
+
+The bootJar task tries to create an executable jar, and that requires a main() method. As a result, you need to disable it by disabling the the Spring Boot plugin, while keeping it for its dependency management features.
+
+Also, now that we have disabled the Spring Boot plugin, it no longer automatically configures the JavaCompiler task to enable the -parameters option. This is important if you are using an expression that refers to a parameter name. The following enables this option:
+
+
+plugins {
+	id 'org.springframework.boot' version '3.3.0' apply false
+	id 'io.spring.dependency-management' version '1.1.5'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+  sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencyManagement {
+	imports {
+		mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.compilerArgs.add("-parameters")
+}
+
+
 3)Distributed database transaction
 4)Hibernate bidirectional mapping
 
