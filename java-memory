@@ -1,1 +1,90 @@
 
+
+
+1)Heap Memory:
+Purpose: Stores objects and arrays created by the application.
+Garbage Collection: Managed by the garbage collector to reclaim memory used by objects that are no longer needed12.
+
+
+Heap Memory is divided into several regions:
+
+Young Generation: The area within the heap where new objects are generally allocated.
+Old Generation: The area within the heap where long-livedmetadata objects are stored after surviving multiple garbage collection cycle.
+Permanent Generation[replaced from java 8 by metaspace  & out of heap ]: It stores metadata about classes and methods.---
+
+2)Stack Memory:
+Purpose: Stores local variables and method call information (e.g., method parameters, return addresses).
+Scope: Each thread has its own stack, which is used for method execution12.
+
+
+When main method is called, the stack frame for the main is created.
+Inside the main, the add method is called with the parameters,
+now the new stack frame for the add is created.
+The add method executes using the provided parameters
+After the add method returns, its stack frame is popped off and control returns to main.
+
+3)Method Area:
+Purpose: Stores class-level data such as class definitions, method data, static variables, and the runtime constant pool.
+Shared: This area is shared among all threads12.
+
+
+4)Program Counter (PC) Register:
+Purpose: Holds the address of the currently executing JVM instruction.
+Scope: Each thread has its own PC register12.
+
+5)Native Method Stack:
+Purpose: Used for native (non-Java) method calls.
+Scope: Each thread has its own native method stack12.
+
+
+6)Metaspace (Java 8 and later):
+Purpose: Replaces PermGen, storing class metadata.
+Dynamic Sizing: Automatically grows as needed, reducing the risk of OutOfMemoryError12.
+
+Perm genLocation: Part of the heap memory.
+
+In summary, while PermGen was a fixed-size part of the heap used for class metadata and static content,
+the class area is a broader concept encompassing various class-level data managed dynamically by the JVM.
+ With the introduction of Metaspace in Java 8, the limitations of PermGen were addressed,
+ allowing for more flexible and efficient memory.
+
+
+Memory Management: PermGen has a fixed size, while Metaspace dynamically a
+Location: PermGen is part of the heap, whereas Metaspace uses native memory12.
+
+  Developers can use JVM parameters like -XX:MetaspaceSize and -XX:MaxMetaspaceSize
+-------------------------------------------------------------------------------------------------------
+
+Garbage Collector[Managed by JVM]
+
+1)Default implementaion by JVM
+
+2)Object obj= new Object();
+obj is stored in heap & memory reference is pointed to stack
+
+obj=null; pointed to null memory -->eligible for GC
+
+3)When method completes execution , objects defined under method scope -->eligible for GC
+
+4)Explicit GC call --?System.gc  / Runtime.getRuntime().gc():
+
+5)invoking gc internally call finalize() method before deleting object-- default implementation is empty
+
+
+
+--------------------------------------------------------------------------------------------------------
+
+
+java primitive vs user defined
+
+1)premitive -int,shoort ,long etc which is stored in stack area , uses call by value
+
+  Wrapper classes are available to convert to objects - suitable for collections.
+  Primitive datatypes do not have null as default value
+
+
+
+2)user defined stored in heap & object reference in stack , that is why string is not primitive
+
+Boolean : Can be true, false, or null.
+boolean L true/ false - null state not possible as directly stored in stack
