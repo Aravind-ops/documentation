@@ -88,3 +88,62 @@ java primitive vs user defined
 
 Boolean : Can be true, false, or null.
 boolean L true/ false - null state not possible as directly stored in stack
+
+
+---------------------------------------------------------------------------------
+
+1)the transient keyword is used during serialization of Java object while volatile is related to the visibility of variables modified by multiple threads during concurrent programming.
+
+2)The Volatile keyword is used to mark the JVM and thread to read its value from primary global memory and not utilize cached value present in the thread stack. It is used in concurrent programming in java.
+
+Static vs volatile - . So the volatile variable will have only one main copy which will be updated by different threads and update made by one thread to the volatile variable will immediately reflect to the other Thread. – volatile update object value in cache
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+4)Java Comparision
+1)Java | ==, equals(), compareTo(), equalsIgnoreCase() and compare() - GeeksforGeeks
+Why to Override equals(Object) and hashCode() method ? - GeeksforGeeks
+
+
+2)object.equals(object) -->default implementation is referece so need to override
+
+3)String.equals(String) --> String class overrides with default ascii comparision implementaion.
+
+4)
+String str1="a"; String str2="a";
+
+same reference is resused in string pool.
+
+String str3= new String ("a");new reference pointing to object in heap
+
+str1!=str3
+str3.intern will bind this string in string pool
+
+String literal created in string pool reusing object references String new=”string”
+String is immutable - The String is safe for multithreading because of its immutableness. Different threads can access a single “String instance”. It removes the synchronization for thread safety because we make strings thread-safe implicitly.
+
+
+5)
+Immutability of Strings:
+
+Strings in Java are immutable, meaning once created, their content cannot be changed.
+This immutability can lead to security risks because the password stored in a String will remain in memory until the garbage collector clears it. This period can be unpredictable and potentially long12.
+String Pool:
+
+Strings are stored in the String Pool, a special area of the heap memory.
+This means that passwords stored as String objects can be retained in memory for a long time, increasing the risk of exposure through memory dumps2.
+Mutable Character Arrays:
+
+char[] arrays are mutable, allowing you to overwrite the data after use.
+This means you can explicitly clear the password from memory by setting the array elements to zero or another value, reducing the window of exposure12.
+
+No way to ged rid of it after use –
+garbage collection do the job – security concern –
+use char array in case of password
+
+Java equals()--- only compare & compareTo methods use Unicode & ascii based comparison to sort values
+
+The java equals() is a method of lang.Object class, and it is used to compare two objects.
+To compare two objects that whether they are the same, it compares the values of both the object's attributes.
+By default, two objects will be the same only if stored in the same memory location.
+ ----------------------____________________________________--------------------------------------------
