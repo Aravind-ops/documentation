@@ -1,1 +1,40 @@
+Iterators are used in the Collection framework in Java to retrieve elements one by one. There are three iterators in Java
+1)Enumeration
+   1)Enumeration is for legacy classes(Vector, Hashtable) only. Hence it is not a universal iterator.
+   2) Remove operations can’t be performed using Enumeration.
+   3)Only forward direction iterating is possible.
+
+Iterator
+
+   1)Iterator itr = c.iterator();
+   2)Only forward direction iterating is possible.
+   3)Replacement and addition of new element is not supported by Iterator.
+    itr.remove()
+ListIterator
+   It is only applicable for List collection implemented classes like ArrayList, LinkedList, etc. It provides bi-directional iteration.
+
+
+
+Difference between the two traversals
+In for-each loop, we can’t modify collection, it will throw a ConcurrentModificationException
+on the other hand with iterator we can modify collection.
+
+Modifying a collection simply means removing an element or changing content of an item stored in the collection.
+This occurs because for-each loop implicitly creates an iterator
+but it is not exposed to the user thus we can’t modify the items in the collections.
+
+
+
+Iterator.remove() – no exception- checks for modcount
+List.remove()-concurrentModificationException
+final void checkForComodification() {
+        if (modCount != expectedModCount)
+            throw new ConcurrentModificationException();
+    }
+
+enhanced for loop uses an Iterator internally to traverse elements in a Collection, running the above code causes a ConcurrentModificationException since the remove() method of the Collection is used instead of the iterator:
+
+---------------------------------------------------------------------------------------------------
+
+
 

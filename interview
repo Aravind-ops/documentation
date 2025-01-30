@@ -119,25 +119,34 @@ Comparator- compare(obje1,obj2)-compare two different objects
 
 ___________________------------------------------------------------------------------------------------------------------------------------
 11)AOP – cross cutting operations with the help of some interceptors
-@Apsect – class level annotation  all the @Advice will be method
+1)@Apsect – class level annotation  all the @Advice will be method
 
-Point cut expression - condition
+2) Point cut is  expression / condition
 @Before(value=exection – packagename.method)     
-@JointPoint – where this advice is implemented
 
-
+3)@JointPoint – where this advice is implemented
 @Before()
 Public void beforeAdvice(JointPoint jionpoint){
 Jointpoint.getmethod()
+//logging
 }
+
 
 
 
 
 Best use case is logging in controller , service layer with start , stop
 
+Interceptors are limited only at request and response but aop shall be implemented at any layer
 
 
+interceptors vs filters
+
+1)interceptors have prehandle() postHandle() & implementation()
+
+2) Filters take precedence over interceptors
+
+3)both are mean for httpservlet request and response.
 
 
 
@@ -152,7 +161,7 @@ Collections
 
  
 
-terators are used in the Collection framework in Java to retrieve elements one by one. There are three iterators in Java
+Iterators are used in the Collection framework in Java to retrieve elements one by one. There are three iterators in Java
 Enumeration
 Iterator
 ListIterator
@@ -168,11 +177,11 @@ Iterator itr = c.iterator();
 Only forward direction iterating is possible.
 Replacement and addition of new element is not supported by Iterator.
 ListIterator
-It is only applicable for List collection implemented classes like ArrayList, LinkedList, etc. It provides bi-directional iteration.
-
-Difference between the two traversals 
+Difference between the two traversals
 In for-each loop, we can’t modify collection, it will throw a ConcurrentModificationException on the other hand with iterator we can modify collection. 
- 
+ It is only applicable for List collection implemented classes like ArrayList, LinkedList, etc. It provides bi-directional iteration.
+
+
 Modifying a collection simply means removing an element or changing content of an item stored in the collection. This occurs because for-each loop implicitly creates an iterator but it is not exposed to the user thus we can’t modify the items in the collections.
 FAQ
 Arraylist  vs Vector

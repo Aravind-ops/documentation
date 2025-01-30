@@ -1,0 +1,32 @@
+)AOP – cross cutting operations with the help of some interceptors
+1)@Apsect – class level annotation  all the @Advice will be method
+
+2) Point cut is  expression / condition
+@Before(value=exection – packagename.method)
+
+3)@JointPoint – where this advice is implemented
+@Before()
+Public void beforeAdvice(JointPoint jionpoint){
+Jointpoint.getmethod()
+//logging
+}
+
+
+
+
+
+Best use case is logging in controller , service layer with start , stop
+
+Interceptors are limited only at request and response but aop shall be implemented at any layer
+
+--------------------------------------------------------------------------------------------------------------------
+interceptors vs filters
+
+1)interceptors have prehandle() postHandle() & implementation()
+
+2) Filters take precedence over interceptors
+
+3)both are mean for httpservlet request and response.
+------------------------------------------------------------------------------------------------------------------
+
+
