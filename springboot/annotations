@@ -28,5 +28,133 @@ interceptors vs filters
 
 3)both are mean for httpservlet request and response.
 ------------------------------------------------------------------------------------------------------------------
+Dependency Injection - this is one such aspect of inversion of control where container is delegated.
+
+1)Constructor injection
+2)Setter injection
+3)Field injection
 
 
+why field injection is not recommended
+   1)Circular dependency
+           Since the dependencies are injected when needed and not on the context load,
+            Spring won’t throw BeanCurrentlyInCreationException.
+   public class A{
+   @Autowired
+   classb dependency1
+
+   public implement(){
+   dependency1.impl();
+   }
+
+   }
+
+
+    public class B{
+      @Autowired
+      classa dependency2
+
+      public implement(){
+      dependency1.impl();
+      }
+
+      }
+
+
+      2)Private Field not accessible - spring container interally uses relection utils to inject beans
+
+
+      public class A{
+
+      @Autowired
+      private Dependcy dependency;
+
+      }
+
+      3)Final fied not possible which is required for immutable classes
+      4)Chance of null pointer execeptions as field injection invoked after constructor inititalization.
+
+
+      ------------------------------------------------------------------------------------------
+
+      Constructor injection
+        1)Ensured all the dependencies are provided at the time of initialization.
+
+        public class a{
+
+        private final Dependency depenecy;// private final field allowed
+
+        @Autowired
+        class a(Dependency dependce){
+        this.dependency=dependecy;
+        }
+        }
+
+
+        Setter injection is preferred when partial fields are to be injected.
+
+
+        --------------------------------------------------------------------------------------------------------
+
+        Spring manages the lifecycle of beans through a series of well-defined steps, ensuring that beans are properly initialized, configured, and eventually destroyed. Here’s an overview of the key stages in the Spring bean lifecycle:
+
+       1) Instantiation: The Spring container creates an instance of the bean using the constructor.
+       2) Property Population: The container populates the bean’s properties using dependency injection.
+        Aware Interfaces: If the bean implements any of the Aware interfaces (e.g., BeanNameAware, BeanFactoryAware, ApplicationContextAware), the container calls the corresponding methods to provide the necessary references.
+        Java
+
+        public class MyBean implements BeanNameAware, BeanFactoryAware {
+            @Override
+            public void setBeanName(String name) {
+                // Bean name is set
+            }
+
+            @Override
+            public void setBeanFactory(BeanFactory beanFactory) {
+                // BeanFactory is set
+            }
+        }
+        AI-generated code. Review and use carefully. More info on FAQ.
+
+        3)Bean Post Processors: The container applies any BeanPostProcessor implementations before and after the initialization callbacks. These processors can modify the bean instance.
+        Java
+
+        public class CustomBeanPostProcessor implements BeanPostProcessor {
+            @Override
+            public Object postProcessBeforeInitialization(Object bean, String beanName) {
+                // Custom logic before initialization
+                return bean;
+            }
+
+            @Override
+            public Object postProcessAfterInitialization(Object bean, String beanName) {
+                // Custom logic after initialization
+                return bean;
+            }
+        }
+        AI-generated code. Review and use carefully. More info on FAQ.
+        Initialization Callbacks: The container calls any initialization methods. This can be done using the @PostConstruct annotation or by implementing the InitializingBean interface.
+        Java
+
+        @PostConstruct
+        public void init() {
+            // Initialization logic
+        }
+        AI-generated code. Review and use carefully. More info on FAQ.
+        Bean Ready for Use: The bean is now fully initialized and ready to be used by the application.
+
+
+        4)Destruction Callbacks: When the container is shutting down, it calls any destruction methods. This can be done using the @PreDestroy annotation or by implementing the DisposableBean interface.
+        Java
+
+        @PreDestroy
+        public void destroy() {
+            // Cleanup logic
+        }
+        AI-generated code. Review and use carefully. More info on FAQ.
+        Bean Destruction: The container removes the bean from the context and performs any necessary cleanup.
+        These steps ensure that beans are properly managed throughout their lifecycle, allowing for custom initialization and cleanup logic123.
+
+
+
+        -----------------------------------------------------------------------------------------

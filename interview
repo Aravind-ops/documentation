@@ -233,7 +233,12 @@ It is synchronized.
 It is a legacy class.
 WeakHashMap
 
-WeakHashMap is an implementation of the Map interface. WeakHashMap is almost same as HashMap except in case of WeakHashMap, if object is specified as key doesn’t contain any references- it is eligible for garbage collection even though it is associated with WeakHashMap. i.e Garbage Collector dominates over WeakHashMap.
+WeakHashMap is an implementation of the Map interface. WeakHashMap is almost same as HashMap except in case of
+WeakHashMap, if object is specified as key doesn’t contain any references
+- it is eligible for garbage collection even though it is associated with WeakHashMap.
+i.e Garbage Collector dominates over WeakHashMap.
+
+only key is removed & values are not garbage collected.
 
 Map.put(key,value);
 Map.put(4,value);
