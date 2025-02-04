@@ -627,6 +627,19 @@ Propagation defines our business logic's transaction boundary. Spring manages to
 
 Spring calls TransactionManager::getTransaction to get or create a transaction according to the propagation. It supports some of the propagations for all types of TransactionManager,_____-----------------___________________-----------------------------------------------------------------------------------------------------
 
+If we want to make sure that the sendEmail method is executed within the same transactional boundary as the updateUserEmail method,
+ we can set the Propagation parameter of the @Transactional annotation to Propagation.REQUIRED.
+This will propagate the transaction to the sendEmail method, ensuring that both methods are executed within the same transactional boundary.
+
+For @Transactional , by default, rollback happens for runtime, unchecked exceptions only.
+ Thus, your checked exception SQLException does not trigger a rollback of the transaction;
+ the behavior can be configured with the rollbackFor and noRollbackFor annotation parameters
+
+
+default @Transactional
+
+custom  @Transactional(noRollbackFor = { SQLException.class })
+
 
 Create JPA Repository-> provides out of box implementation and takes care of entity manager in hibernate
 
