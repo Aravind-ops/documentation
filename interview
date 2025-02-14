@@ -30,6 +30,8 @@ Serialization – read resolve()
 SerialVersionUID The Serialization runtime associates a version number with each Serializable class called a SerialVersionUID, which is used during Deserialization to verify that sender and receiver of a serialized object have loaded classes for that object which are compatible with respect to serialization. If the receiver has loaded a class for the object that has different UID than that of corresponding sender’s class, the Deserialization will result in an InvalidClassException.
 
 How to Create an Immutable Class in Java with Example | Programming Mitra
+
+records from java 17
 Immutable- final variables, final methods, copy constructor, no setter- used for concurrent programming
 where immutability makes an especially big difference is concurrency: immutable objects can safely be shared among multiple threads, whereas mutable objects must be made thread-safe via careful design and implementation - usually this is far from a trivial task.
 ---------------------------------------------------------------------------------------------------------------------
