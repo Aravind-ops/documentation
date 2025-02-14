@@ -1,0 +1,64 @@
+Microservices
+Eureka server- register clients
+
+MongoDb
+
+
+Mongotemplate vs MongoRepository
+CICD
+
+Gradle vs maven
+mvn dependency:tree  - to resolve dependency conflict
+Gradle- not specifto to any language
+Maven- java specfic
+Gradle- creates a loca
+Gradle
+
+Gradle is more of project life cycle manager with settings.gradle,gradlewrapper inside project
+Gradle don’t need installation – wrapper is doing the job
+
+
+
+
+DESIGN PATTERNS
+
+SOLID principle
+S- single responsibility – to the point
+O- open closed  open for extension closed for modification
+L- liskov substitution
+I interface segregation- split larger interface to smaller one
+D- Dependency Inversion – move away from new dependency
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+SAGA
+Sagas (microservices.io)
+
+Saga Pattern for Microservices Distributed Transactions | by Mehmet Ozkaya | Design Microservices Architecture with Patterns & Principles | Medium
+
+To mange distributed transactions across services per database
+i)publish/subscribe model where transaction status is published from each layer
+ii)centralized microservice controller – but this will be single point of failure.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CQRS Design Pattern in Microservices Architectures | by Mehmet Ozkaya | Design Microservices Architecture with Patterns & Principles | Medium
+
+We can use CQRS design pattern in order to avoid complex queries to get rid of inefficient joins.
+
+
+So we can say that CQRS separates reads and writes into different databases, Commands performs update data, Queries performs read data.
+
+Commands should be actions with task-based operations like “add item into shopping cart” or “checkout order”. So commands can be handle with message broker systems that provide to process commands in async way.
+
+Queries is never modify the database. Queries always return the JSON data with DTO objects. By this way, we can isolate the Commands and Queries.
+
+
+
+
+How to Sync Databases with CQRS ?
+But when we separate read and write databases in 2 different database, the main consideration is sync these two database in a proper way.
+
+So we should sync these 2 databases and keep sync always.
+
+This can be solve by using Event-Driven Architecture. According to Event Driven Architecture, when something update in write database, it will publish an update event with using message broker systems and this will consume by the read database and sync data according to latest changes.
+
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------

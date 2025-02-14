@@ -1,0 +1,131 @@
+KAFKA
+Top 50 Kafka Interview Questions And Answers for 2023 (simplilearn.com)
+Top Kafka Interview Questions and Answers (2023) - InterviewBit
+
+https://www.simplilearn.com/kafka-interview-questions-and-answers-article
+https://www.interviewbit.com/kafka-interview-questions/
+
+
+
+
+Mq- message is not retained, kafka – message is retained [CloudKarafka default: log.retention.hours=168]
+Mq-push pull  model     , kafka – publish , subscription model
+
+Since Rabbitmq is a message queue, messages are done away with once consumed and the acknowledgement is sent.
+Ordering of messages not possible in mq
+
+Since Kafka is a log, the messages are always present there. We can have a message retention policy for the same.
+
+Topic- this is where message is published from producer.
+Consumer – group of consumers who are going to consume the given topic
+
+Same message in a topic can be consumed by multiple consumers which is published to multiple topics
+Same consumer can consume multiple topic
+Kafka ensures that within a consumer group,
+no two consumers read the same message, thus each message is processed only once per group.
+
+
+Ordering in kafka ->
+https://medium.com/latentview-data-services/how-to-use-apache-kafka-to-guarantee-message-ordering-ac2d00da6c22
+Ordering of messages:
+  1)Single partion  - default order
+  2)Multiple partition - order not maintained
+     i)Round robbin stategy -- default option-- > parallel partion is achieved at the cost of ordering
+     ii)MEssage key based hashing algorithm - custom config
+
+The default partitioner will use the hash of the key to ensure that all messages for the
+same key go to same producer. This is the easiest and most common approach.
+ This is the same method which has been used for hive bucketing as well. It uses modulo operation for hashing.
+
+Hash(Key) % Number of partitions -> Partition number
+
+1)offset - What is the role of the offset?
+In partitions, messages are assigned a unique ID number called the offset.
+The role is to identify each message in the partition uniquely.
+Once a record is written to a partition, it is given an offset –
+a sequential id that reflects the record's position in the partition
+and uniquely identifies it inside it.
+
+Partitioning is done using the record's key. By default, Kafka producer uses the record's key to
+determine which partition the record should be written to.
+ The producer will always choose the same partition for two records with the same key.
+
+message key is created at the producer level --> cluster insert record into partition which is a data structure-->
+ generates offset number to identify sequence within the partition
+
+
+
+2)Partition group – enables parallel reading of messages from consumer group.
+
+3)Cluster – group of kafka servers to provide fault tolerance.
+
+4)In sync replica - In-Sync Replica (ISR) is a replica that is up to date with the partition leader.
+
+5)Zookeeper – cluster manager -topology changes in topic and consumer then notify to all
+– assign leader and followers in a partition group.
+
+6)schema registry – ensures compatibility between producer and consumer – send schema id instead of entire schema to validate
+
+7) message key – each record have unique key and value - The producer will always choose the same partition for two records with the same key. It is used to maintain order.
+
+8)kafka performance tuning
+  1)throughput – number of messages processed per unit time
+   2)latency – time taken to process one message.
+
+
+9)Override listen method to send acknowledgment
+
+Also, note that the annotated methods can also specify the following parameters:
+
+ConsumerRecord: to access the raw Kafka message.
+Acknowledgment: to manually acknowledge the message.
+@Payload: binds a method parameter to the payload of a message.
+@Header: binds a method parameter method to a message header.
+
+@KAfkalistenter(Topicname=””)
+Process(ConsumerRecord<k,,v>){
+}
+@OVeride
+Listen(Acknowledge,,ent ack)
+{
+Acknowledgment.ack();
+}
+10) 10
+
+Setting the auto.offset.reset=earliest, AND a fixed group.id=something in the consumer config
+ will start the consumer at the last committed offset. In your case it should start
+ consuming at the first message at 7:20. If you want it to start reading messages
+  posted AFTER it starts, then the auto.offset.reset=latest will ignore the 10 messages sent at 7:20
+  and read any that come in after it starts.
+
+
+11)
+ENABLE_AUTO_COMMIT_CONFIG: When the consumer from a group receives a message
+it must commit the offset of that record. If this configuration is set to be true then,
+periodically, offsets will be committed, but, for the production level, this should be false
+ and an offset should be committed manually.
+
+If this parameter is set to true,
+ if the consumer does not fail in any case after reading the message,
+ it is automatically committed.
+
+ If set to false, manual commit is required with the commitSync() method.
+
+AUTO_OFFSET_RESET_CONFIG: For each consumer group, the last committed offset value is stored.
+ This configuration comes handy if no offset is committed for that group,
+ i.e. it is the new group created.
+
+
+
+
+ 12)AckMode.MANUAL: The listener is responsible for acknowledging messages.
+ Acknowledgments are queued, and offsets are committed when all records from the previous poll have been processed1.
+  This mode ensures that offsets are committed in order, which is crucial for maintaining message processing consistency.
+    AckMode.MANUAL_IMMEDIATE: Similar to MANUAL, but the commit is performed immediately
+    if the acknowledgment is done on the calling consumer thread.
+    If not, acknowledgments are queued, and offsets are committed once all records from the previous poll are processed1. This mode can provide faster acknowledgment
+    but may lead to indeterminate results if acknowledgments are sometimes immediate and sometimes queued.
+
+    auto commit=true commits in periodic interval similar to ackmode.manual
+
+

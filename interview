@@ -859,6 +859,8 @@ https://www.simplilearn.com/kafka-interview-questions-and-answers-article
 https://www.interviewbit.com/kafka-interview-questions/
 
 
+
+
 Mq- message is not retained, kafka – message is retained [CloudKarafka default: log.retention.hours=168]
 Mq-push pull  model     , kafka – publish , subscription model
 
@@ -872,9 +874,39 @@ Consumer – group of consumers who are going to consume the given topic
 
 Same message in a topic can be consumed by multiple consumers which is published to multiple topics
 Same consumer can consume multiple topic
+Kafka ensures that within a consumer group,
+no two consumers read the same message, thus each message is processed only once per group.
+
+
+Ordering in kafka ->
+https://medium.com/latentview-data-services/how-to-use-apache-kafka-to-guarantee-message-ordering-ac2d00da6c22
+Ordering of messages:
+  1)Single partion  - default order
+  2)Multiple partition - order not maintained
+     i)Round robbin stategy -- default option-- > parallel partion is achieved at the cost of ordering
+     ii)MEssage key based hashing algorithm - custom config
+
+The default partitioner will use the hash of the key to ensure that all messages for the
+same key go to same producer. This is the easiest and most common approach.
+ This is the same method which has been used for hive bucketing as well. It uses modulo operation for hashing.
+
+Hash(Key) % Number of partitions -> Partition number
 
 1)offset - What is the role of the offset?
-In partitions, messages are assigned a unique ID number called the offset. The role is to identify each message in the partition uniquely.
+In partitions, messages are assigned a unique ID number called the offset.
+The role is to identify each message in the partition uniquely.
+Once a record is written to a partition, it is given an offset –
+a sequential id that reflects the record's position in the partition
+and uniquely identifies it inside it.
+
+Partitioning is done using the record's key. By default, Kafka producer uses the record's key to
+determine which partition the record should be written to.
+ The producer will always choose the same partition for two records with the same key.
+
+message key is created at the producer level --> cluster insert record into partition which is a data structure-->
+ generates offset number to identify sequence within the partition
+
+
 
 2)Partition group – enables parallel reading of messages from consumer group.
 
@@ -882,7 +914,8 @@ In partitions, messages are assigned a unique ID number called the offset. The r
 
 4)In sync replica - In-Sync Replica (ISR) is a replica that is up to date with the partition leader.
 
-5)Zookeeper – cluster manager -topology changes in topic and consumer then notify to all – assign leader and followers in a partition group.
+5)Zookeeper – cluster manager -topology changes in topic and consumer then notify to all
+– assign leader and followers in a partition group.
 
 6)schema registry – ensures compatibility between producer and consumer – send schema id instead of entire schema to validate
 
