@@ -1,10 +1,10 @@
 )AOP – cross cutting operations with the help of some interceptors
 1)@Apsect – class level annotation  all the @Advice will be method
 
-2) Point cut is  expression / condition
+) Point cut is  expression / condition
 @Before(value=exection – packagename.method)
 
-3)@JointPoint – where this advice is implemented
+)@JointPoint – where this advice is implemented
 @Before()
 Public void beforeAdvice(JointPoint jionpoint){
 Jointpoint.getmethod()
@@ -20,15 +20,19 @@ Best use case is logging in controller , service layer with start , stop
 Interceptors are limited only at request and response but aop shall be implemented at any layer
 
 --------------------------------------------------------------------------------------------------------------------
-interceptors vs filters
+2)interceptors vs filters
 
 1)interceptors have prehandle() postHandle() & implementation()
 
 2) Filters take precedence over interceptors
 
 3)both are mean for httpservlet request and response.
+
+Filter layers sits before dispatcher servlet
+Dispatcher servlet manage httprequest ,httpresponse to  controller
+interceptor intercepts request before it reaches controller
 ------------------------------------------------------------------------------------------------------------------
-Dependency Injection - this is one such aspect of inversion of control where container is delegated.
+3)Dependency Injection - this is one such aspect of inversion of control where container is delegated.
 
 1)Constructor injection
 2)Setter injection
@@ -91,12 +95,12 @@ why field injection is not recommended
         }
 
 
-        Setter injection is preferred when partial fields are to be injected.
+        Setter injection is preferred when partial fields are to be injected.// shall sove circular dependency problem as well
 
 
         --------------------------------------------------------------------------------------------------------
 
-        Spring manages the lifecycle of beans through a series of well-defined steps, ensuring that beans are properly initialized, configured, and eventually destroyed. Here’s an overview of the key stages in the Spring bean lifecycle:
+    4)``    Spring manages the lifecycle of beans through a series of well-defined steps, ensuring that beans are properly initialized, configured, and eventually destroyed. Here’s an overview of the key stages in the Spring bean lifecycle:
 
        1) Instantiation: The Spring container creates an instance of the bean using the constructor.
        2) Property Population: The container populates the bean’s properties using dependency injection.
@@ -158,3 +162,46 @@ why field injection is not recommended
 
 
         -----------------------------------------------------------------------------------------
+
+        5)Spring Boot lets you wire beans that you may not be aware you need. It also showed how to turn on convenient management services. However, Spring Boot does more than that. It supports not only traditional WAR file deployments but also lets you put together executable JARs, thanks to Spring Boot’s loader module. The various guides demonstrate this dual support through the spring-boot-gradle-plugin and spring-boot-maven-plugin.
+
+          The Library project has no class with a main method (because it is not an application). Consequently, you have to tell the build system to not try to build an executable jar for the Library project. (By default, the Spring Initializr builds executable projects.)
+
+          To tell Maven to not build an executable jar for the Library project, you must remove the following block from the pom.xml created by the Spring Initializr:
+
+          org.springframework.boot spring-boot-maven-plugin
+          gradle option
+
+          The bootJar task tries to create an executable jar, and that requires a main() method.
+
+          As a result, you need to disable it by disabling the the Spring Boot plugin,
+          while keeping it for its dependency management features.
+
+          Also, now that we have disabled the Spring Boot plugin,
+          it no longer automatically configures the JavaCompiler task to enable the -parameters option.
+           This is important if you are using an expression that refers to a parameter name. The following enables this option:
+
+          plugins { id 'org.springframework.boot' version '3.3.0' apply false id 'io.spring.dependency-management' version '1.1.5' id 'java' }
+
+          group = 'com.example' version = '0.0.1-SNAPSHOT'
+
+          java { sourceCompatibility = '17' }
+
+          repositories { mavenCentral() }
+
+          dependencyManagement { imports { mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES } }
+
+          dependencies { implementation 'org.springframework.boot:spring-boot' testImplementation 'org.springframework.boot:spring-boot-starter-test' }
+
+          tasks.withType(JavaCompile).configureEach { options.compilerArgs.add("-parameters") }
+
+          -----------------------------------------------------------------------
+          The ApplicationContext and BeanFactory are both interfaces in the Spring framework
+           used for managing beans, but they have some key differences:
+
+          Initialization:
+          BeanFactory: Uses lazy initialization, meaning beans are created only when they are requested.
+          ApplicationContext: Uses eager initialization, meaning all singleton beans are created at startup.
+
+          ApplicationContext context= new AnnotationConfigApplicationContext(Myclass.class);
+         MyBean mybean= context.getbean("Mybean.class");

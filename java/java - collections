@@ -1,28 +1,172 @@
+Collections
+
+
+
+
+
+
 Iterators are used in the Collection framework in Java to retrieve elements one by one. There are three iterators in Java
-1)Enumeration
-   1)Enumeration is for legacy classes(Vector, Hashtable) only. Hence it is not a universal iterator.
-   2) Remove operations can’t be performed using Enumeration.
-   3)Only forward direction iterating is possible.
+Enumeration
+Iterator
+ListIterator
+
+Enumerator
+Enumeration is for legacy classes(Vector, Hashtable) only. Hence it is not a universal iterator.
+Remove operations can’t be performed using Enumeration.
+Only forward direction iterating is possible.
+numeration e = v.elements();
 
 Iterator
-
-   1)Iterator itr = c.iterator();
-   2)Only forward direction iterating is possible.
-   3)Replacement and addition of new element is not supported by Iterator.
-    itr.remove()
+Iterator itr = c.iterator();
+Only forward direction iterating is possible.
+Replacement and addition of new element is not supported by Iterator.
 ListIterator
-   It is only applicable for List collection implemented classes like ArrayList, LinkedList, etc. It provides bi-directional iteration.
-
-
-
 Difference between the two traversals
-In for-each loop, we can’t modify collection, it will throw a ConcurrentModificationException
-on the other hand with iterator we can modify collection.
+In for-each loop, we can’t modify collection, it will throw a ConcurrentModificationException on the other hand with iterator we can modify collection.
+ It is only applicable for List collection implemented classes like ArrayList, LinkedList, etc. It provides bi-directional iteration.
 
-Modifying a collection simply means removing an element or changing content of an item stored in the collection.
-This occurs because for-each loop implicitly creates an iterator
-but it is not exposed to the user thus we can’t modify the items in the collections.
 
+Modifying a collection simply means removing an element or changing content of an item stored in the collection. This occurs because for-each loop implicitly creates an iterator but it is not exposed to the user thus we can’t modify the items in the collections.
+FAQ
+Arraylist  vs Vector
+
+Performance: ArrayList is faste
+Data Growth: ArrayList and Vector both grow and shrink dynamically to maintain optimal use of storage – but the way they resize is different. ArrayList increments 50% of the current array size if the number of elements exceeds its capacity, while vector increments 100% – essentially doubling the current array size.
+Traversal: Vector can use both Enumeration and Iterator for traversing over elements of vector while ArrayList can only use Iterator for traversing.
+Synchronization : Vector is synchronized, which means only one thread at a time can access the code, while arrayList is not synchronized,
+ArrayList	LinkedList
+This class uses a dynamic array to store the elements in it. With the introduction of generics, this class supports the storage of all types of objects.	This class uses a doubly linked list to store the elements in it. Similar to the ArrayList, this class also supports the storage of all types of objects.
+Manipulating ArrayList takes more time due to the internal implementation. Whenever we remove an element, internally, the array is traversed and the memory bits are shifted.	Manipulating LinkedList takes less time compared to ArrayList because, in a doubly-linked list, there is no concept of shifting the memory bits. The list is traversed and the reference link is changed.
+This class implements a List interface. Therefore, this acts as a list.	This class implements both the List interface and the Deque interface. Therefore, it can act as a list and a deque.
+
+This class works better when the application demands storing the data and accessing it.	This class works better when the application demands manipulation of the stored data.
+
+
+\
+Differences between TreeMap, HashMap and LinkedHashMap in Java
+
+HashMap: HashMap offers 0(1) lookup and insertion
+public class HashMap extends AbstractMap
+implements Map,Cloneable, Serializable
+A HashMap contains values based on the key.
+It contains only unique elements.
+It may have one null key and multiple null values.
+It maintains no order.
+LinkedHashMap
+public class LinkedHashMap extends HashMap
+implements Map
+A LinkedHashMap contains values based on the key.
+It contains only unique elements.
+It may have one null key and multiple null values.
+It is same as HashMap instead maintains insertion order.
+3.TreeMap: TreeMap offers O(log N) lookup and insertion. Keys are ordered, so if you need to iterate through the keys in sorted order, you can. This means that keys must implement the Comparable interface. TreeMap is implemented by a Red-Black Tree.
+A TreeMap contains values based on the key. It implements the NavigableMap interface and extends AbstractMap class.
+It contains only unique elements.
+It cannot have null key but can have multiple null values.
+It is same as HashMap instead maintains ascending order(Sorted using the natural order of its key).
+
+Hashtable: “Hashtable” is the generic name for hash-based maps.
+Syntax:
+public class Hashtable extends Dictionary implements
+Map, Cloneable, Serializable
+
+A Hashtable is an array of list. Each list is known as a bucket. The position of bucket is identified by calling the hashcode() method. A Hashtable contains values based on the key.
+It contains only unique elements.
+It may have not have any null key or value.
+It is synchronized.
+It is a legacy class.
+WeakHashMap
+
+WeakHashMap is an implementation of the Map interface. WeakHashMap is almost same as HashMap except in case of
+WeakHashMap, if object is specified as key doesn’t contain any references
+- it is eligible for garbage collection even though it is associated with WeakHashMap.
+i.e Garbage Collector dominates over WeakHashMap.
+
+only key is removed & values are not garbage collected.
+
+Map.put(key,value);
+Map.put(4,value);
+Map.get(4)=null;
+System.put(d," Hi ");
+WeakHashMap m = new WeakHashMap();
+        Demo d = new Demo();
+
+        // puts an entry into WeakHashMap
+
+        System.out.println(m);
+
+        d = null;
+         m.gc  // not eligible for garbage collection in case of hashmap & null is valid key in hash map value of hashcode*null=0;
+
+Internal working of Hash map
+Internal Working of HashMap in Java - GeeksforGeeks
+index = hashCode(key) & (n-1).
+Initial Load=16
+Threshold=12;
+Resizing value=.75*16=12
+A bucket is one element of HashMap array. It is used to store nodes
+
+Node in a hashmap has
+{
+  int hash = 115
+  Key key = {"sachin"}
+  Integer value = 30
+  Node next = null
+}
+
+
+
+
+map.put(new Key("vishal"), 20);
+
+
+
+Steps:
+Calculate hash code of Key {“vishal”}. It will be generated as 118.
+Calculate index by using index method it will be 6.
+Create a node object as :
+
+In Case of collision: Now, putting another pair that is,
+If keys are same, replace the value with current value.[hence no duplicates in hashmap]
+Otherwise connect this node object to the previous node object via linked list and both are stored at index 6.
+
+
+map.put(new Key("vaibhav"), 40);
+
+
+
+All three criteria in the contract of hashCode() mention in some ways the equals() method:
+internal consistency: the value of hashCode() may only change if a property that is in equals() changes
+equals consistency: objects that are equal to each other must return the same hashCode
+collisions: unequal objects may have the same hashCode
+
+
+map.get()
+repeat same steps to  calculate index from key
+
+Go to index 3 of array and compare first element’s key with given key. If both are equals then return the value, otherwise check for next element if it exists.
+
+Here equals methods helps to get exact value for the key though it has same hashcode.
+When getting an object with its key, the linked list is traversed until the key matches or null is found on next field.
+
+
+HashSet
+
+HAshset internally uses hashmap
+
+Actually the value we insert in HashSet acts as a key to the map Object and for its value, java uses a constant variable. So in the key-value pair, all the values will be the same.
+/ add method
+    // it calls put() method on map object
+    // and then compares it's return value with null
+    public boolean add(E e) {
+        return map.put(e, PRESENT)==null;
+    }
+
+specified as it’s key and constant Object called “PRESENT”
+
+Duplicates not allowed in set -
+we know in a HashMap each key is unique and when we call put(Key, Value) method, it returns the previous value associated with key, or null if there was no mapping for key. So in add() method we check the return value of map.put(key, value) method with null value.
+Objects that you insert in HashSet are not guaranteed to be inserted in the same order. Objects are inserted based on their hash code.
 
 
 Iterator.remove() – no exception- checks for modcount
@@ -34,7 +178,50 @@ final void checkForComodification() {
 
 enhanced for loop uses an Iterator internally to traverse elements in a Collection, running the above code causes a ConcurrentModificationException since the remove() method of the Collection is used instead of the iterator:
 
----------------------------------------------------------------------------------------------------
 
+------------------------------------------
+
+hashmap--->concurrentmodificationexception
+concurrent hsshmap--> no --> lock on thew bucket --> multiple thread access
+synchronizedhashmap-->no --> lock on whole map -->multiple threads not possible to access
+
+
+concurrent hashmap dont support null [ consistency is the reason]key though hashmap support one null key
+
+
+es: Iterators from concurrent collections like CopyOnWriteArrayList and ConcurrentHashMap.
+
+Behavior: Fail-safe iterators do not throw any exceptions if the collection is modified during iteration because they operate on a copy of the collection.
+Implementation: They create a clone of the collection and iterate over the clone, so modifications to the original collection do not affect the iterator.
+Examples: Iterators from concurrent collections like CopyOnWriteArrayList and ConcurrentHashMap.
+Use Case: Suitable for multi-threaded environments where modifications during iteration are expected or possible.
+Example of Fail-Safe Iterator
+Java
+
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Iterator;
+
+public class FailSafeExample {
+    public static void main(String[] args) {
+        CopyOnWriteArrayList<Integer> numbers = new CopyOnWriteArrayList<>();
+        numbers.add(1);
+        numbers.add(2);
+        numbers.add(3);
+
+        Iterator<Integer> iterator = numbers.iterator();
+        while (iterator.hasNext()) {
+            Integer number = iterator.next();
+            System.out.println(number);
+            if (number.equals(2)) {
+                numbers.remove(number); // This will not throw an exception
+            }
+        }
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+Key Differences
+Fail-Fast: Operates directly on the collection, throws ConcurrentModificationException on modification, faster, suitable for single-threaded environments.
+Fail-Safe: Operates on a clone of the collection, does not throw exceptions on modification, slower, suitable for multi-threaded environments12.
+Would you like more details on any specific aspect of these iterators?
 
 

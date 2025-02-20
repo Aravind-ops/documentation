@@ -150,7 +150,9 @@ interceptors vs filters
 
 3)both are mean for httpservlet request and response.
 
-
+Filter layers sits before dispatcher servlet
+Dispatcher servlet manage httprequest ,httpresponse to  controller
+interceptor intercepts request before it reaches controller
 
 
 
