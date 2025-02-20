@@ -1,1 +1,55 @@
+JAVA8
+
+
+!)Lambda expression and functional interface
+
+interface with only one abstract method -- eg Runnable ,Comparable
+
+From java 8 lambada expression is used to represent
+
+new Thread(()->{}).start();
+before java 8 anonymouys inner class
+
+new Thread(new Runnable() {
+            @Override public void run()
+            {
+                System.out.println("New thread created");
+            }
+        }).start();
+
+2)Lambda expression with collection
+3)Anonymous inner classes with lambda expression
+new runnable({
+@overide
+}
+)
+
+-------------------------------------------------------------------------------------
+4)Predicate,Funciton,Consumer,Supplier
+-predefined functional interface
+
+---------------------------------------------------------------------------
+5)	Streams
+java 8 stream limit,skip[select first n,select last n]
+streams --> only perform operation on collection not manipulate / store collection
+parallelstream --> ability to parallely  utilize hardware core
+intermediate operations -->filter , map,flatmap,sorted
+
+
+map is a flattening operation -- eg to get some age field from employee object stream
+
+employeeList.stream().filter(e->e.department!=null).map(Employee::getAge).forEach(System.out::println);
+
+Flapmap
+
+Terminary operations --> collect, foreach,anymatch ,allmatch ,findFirst,limit,skip
+Predicate,
+Functional Interfaces: Predicate, Consumer, Function, and Supplier - Javagyansite
+Java8 optional .Optional.of()- null pointer exception if the argument passed is nullOptional
+is a container to hold null/ non null values\kdl
+
+optional wont prevent null pointer but a holder for null values.
+Functional interfcace- interface with only one abstract method- eg runnable,predicate,function,supplier
+
+--------------------------------------------------------------------------------------------------------------
 

@@ -1,1 +1,167 @@
+Q-1 What is the difference between the start() and run() method?
+First, both methods are operated in general over the thread. So if we do use threadT1.start() then this method will look for the run() method to create a new thread. While in case of theadT1.run() method will be executed just likely the normal method by the “Main” thread without the creation of any new thread.
+Note: If we do replace start() method with run() method then the entire program is carried by ‘main’ thread.
+ Can we Overload run() method? What if we do not override the run() method?
 
+We can overload the run() method but start() method will call no argument run() only. Hence, it will be of no help to us and is is considered as bad practice.
+---------------------------------------------------------------------------------------------------------------------
+Q-2 Can we Override the start() method?
+Even if we override the start() method in the custom class then no initializations will be carried on by the Thread class for us. The run() method is also not called and even a new thread is also not created.
+Thread Class vs Runnable Interface
+If we extend the Thread class, our class cannot extend any other class because Java doesn’t support multiple inheritance. But, if we implement the Runnable interface, our class can still extend other base classes.
+We can achieve basic functionality of a thread by extending Thread class because it provides some inbuilt methods like yield(), interrupt() etc. that are not available in Runnable interface.
+Using runnable will give you an object that can be shared amongst multiple threads.
+
+-------------------------------------------------------------------------------------------------------------------------
+
+Thread lifecycle
+yield,join -->thread methods --related to thead priority
+
+wiat,notify ,notifyall -->object class methods --> related to lock on objects
+
+
+New thread-->start--->Runnable state-->Running State-->acquire lock--> Running state-->blocked Threads--->join-->wiating
+Q3)Join
+If any executing thread t1 calls join() on t2 i.e; t2.join() immediately
+ t1 will enter into waiting state until t2 completes its execution.
+Giving a timeout within join(), will make the join() effect to be nullified after the specific timeout.
+
+
+
+If t is a Thread object whose thread is currently executing, then t.join()
+ will make sure that t is terminated before the next instruction is executed by the program—
+ to maintain sequence of execution of thread.
+
+
+Property	yield()	join()	sleep()
+Purpose	If a thread wants to pass its execution to give chance to remaining threads of the same priority then we should go for yield()
+If a thread wants to wait until completing of some other thread then we should go for join()
+If a thread does not want to perform any operation for a particular amount of time, then it goes for sleep()
+
+-------------------------------------------------------------------------------------------------------------------
+Q4)Wait[used in synchronized  block]
+
+Wait() should be called only from Synchronized context.	There is no need to call sleep() from Synchronized context.
+
+Wait()	notify()
+When wait() is called on a thread holding the monitor lock, it surrenders the monitor lock and enters the waiting state.
+	When the notify() is called on a thread holding the monitor lock, it symbolizes that the thread is soon
+	 going to surrender the lock.
+There can be multiple threads in the waiting state at a time.
+	One of the waiting threads is randomly selected and notified about the same.
+	 The notified thread then exits the waiting state and enters the blocked state where it waits
+	  till the previous thread has given up the lock and this thread has acquired it.
+	   Once it acquires the lock, it enters the runnable state where it waits for CPU time and then it st
+
+In java, synchronized methods and blocks allow only one thread to acquire the lock on a resource at a time.
+ So, when wait() method is called by a thread, then it gives up the lock on that resource
+  and goes to sleep until some other thread enters the same monitor and invokes the notify() or notifyAll() method.
+--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+Q5) Future – Future blocking execution without error hanlling ->
+ListenableFuture with error handling non blockingcompletable Future enhances with java 8 function chaining
+
+Yes! CompletableFuture executes these tasks in a thread obtained from the global ForkJoinPool.commonPool().
+listenablefuture – callback on complete and failure – aync process enabled
+future – aync response will be locked till complete
+Executor executor= new fixedthread();
+Future<Object> future=Executore.submit(callable);
+
+Callable vs runnable
+
+
+java - Listenablefuture vs Completablefuture - Stack Overflow
+https://www.callicoder.com/java-8-completablefuture-tutorial/
+
+
+ -----------------------------------------------------------------------------------------------------------
+
+
+
+wait() Method in Java With Examples - GeeksforGeeks
+wait is used in synchronized context with notify and notify all
+join is to pause execution of thread to die , to ensure sequence of execution of theread like t1.join ()t2).
+Differences between wait() and join() methods in Java - GeeksforGeeks
+
+
+Q5)Calling notify() wakes only one thread and calling notifyAll() wakes up all the threads on the same object. Calling both these methods does not give up the lock on the resource, rather its job is to wake up the threads that have been sent to the sleep state using wait() method.
+
+Thread.wait();calling htread acquired lock, once done notify
+-------------------------------------------_____________________________________________________
+Q6yield() basically means that the thread is not doing anything particularly important
+ and if any other threads or processes need to be run, they should run.
+  Otherwise, the current thread will continue to run.
+
+Deals with thread PRIORITY
+
+
+`````````````````````````````````````````````````````````````````````````````````````
+
+Q7)Deadlock
+
+Avoid Nested Locks : This is the main reason for dead lock.
+public static Object cacheLock = new Object();
+  public static Object tableLock = new Object();
+  ...
+  public void oneMethod() {
+    synchronized (cacheLock) {
+      synchronized (tableLock) {
+        doSomething();
+      }
+    }
+  }
+  public void anotherMethod() {
+    synchronized (tableLock) {
+      synchronized (cacheLock) {
+        doSomethingElse();
+      }
+    }
+  }
+
+Q9) the transient keyword is used during serialization of Java object while volatile is related to the visibility of variables modified by multiple threads during concurrent programming.
+The Volatile keyword is used to mark the JVM and thread to read its value from primary global memory and not utilize cached value present in the thread stack. It is used in concurrent programming in java.
+
+Static vs volatile - . So the volatile variable will have only one main copy which will be updated by different threads and update made by one thread to the volatile variable will immediately reflect to the other Thread. – volatile update object value in cache
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Q)10
+Frameworks take care of thread life cycle , creating thread pool , creating queue of tasks & submit for execution
+
+ExecutorService exe=Executors.fixedThreadPoolExecutor(3);
+
+exe.submit()/exe.execute();
+Executor Service --uses fixed thread pool -->submit callable & Runnable tasks
+Future<String> future = executorService.submit(() -> {
+            Thread.sleep(2000);
+            return "Hello, Future!";
+        });
+future.get() is blocking call -->need to wait till operation is completed --> error hanlding is not possible
+
+Completable Future -->supplyAsync()uses forkjoin pool --> divide tasks & join concepts -- uses supplyAsyc()
+
+
+
+CompletableFuture class implements the Future interface so
+that we can use it as a Future implementation but with additional completion logic.
+
+
+CompletableFuture<String> completableFuture
+  = CompletableFuture.supplyAsync(() -> "Hello");
+
+CompletableFuture<Void> future = completableFuture
+  .thenAccept(s -> System.out.println("Computation returned: " + s));
+
+future.get();
+
+But hey, you can also create a Thread Pool and pass it to runAsync()
+and supplyAsync() methods to let them execute their tasks in a thread obtained from your thread pool.
+
+All the methods in the CompletableFuture API has two variants -
+One which accepts an Executor as an argument and one which doesn’t -
+
+// Variations of runAsync() and supplyAsync() methods
+static CompletableFuture<Void>	runAsync(Runnable runnable)
+static CompletableFuture<Void>	runAsync(Runnable runnable, Executor executor)
+static <U> CompletableFuture<U>	supplyAsync(Supplier<U> supplier)
+static <U> CompletableFuture<U>	supplyAsync(Supplier<U> supplier, Executor executor)
