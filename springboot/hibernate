@@ -1,0 +1,101 @@
+###########################################################################################
+
+Q1)why hibernate?
+1)eliminates boiler plate code
+2)provides transaction management implicitly
+3)Supports caching
+4)provides ORM mapping
+5)Throws JDBC exception or Hibernate Exception which are unchecked exceptions
+Q2) Session and session factory
+
+Session – interface to connect to database, provides crud operations[ session.save()]
+SessionFactory -initialize once cache it and reuse again – one sessionfactory per database connection
+SessionFactory get session
+Session session=sessionfactory.getSession();
+Transaction =session.getTransaction
+Session,.save()
+t.commit;
+factory.close; session.close
+
+
+
+
+
+
+
+
+
+Q3)Mapping in hiberate
+
+@MappedBy is annotation to inform that association is already taken care by owner entity
+@JoinBy is mapped in owner entity
+
+1)OnetoOne mapping – straightforward one to one entity- similar to document in mongodb
+
+2)OnetoMAny mapping keeping foreign key in a single column  similar to join
+
+3)ManytoOne Mapping
+
+4)ManytoMany mapping
+//address_add_id - default fk column name
+@OneToOne(cascade = CascadeType.ALL)
+@JoinColumn(name = "fk_add_id")
+
+
+// for bidirectional one to one mapping
+//@OneToOne(mappedBy = "address")
+//private Employee employee;
+
+//unidirectional one-to-many
+@OneToMany(cascade = CascadeType.ALL)
+@JoinColumn(name = "fk_emp_id",referencedColumnName = "emp_id")
+private List<Address> address;
+
+
+@ManyToOne
+@JoinColumn(name = "fk_emp_id")
+private Employee employee2;
+
+
+@ManyToMany
+@JoinTable(name = "employee_project",
+        joinColumns = @JoinColumn(name = "employee_id"),
+        inverseJoinColumns = @JoinColumn(name = "project_id")
+)
+
+@ManyToMany(mappedBy = "assignedProjects")
+    private Set<Employee> employeeSet = new HashSet<>();
+
+
+
+
+Q4) currentsession – close once session factory is closed – context of hibernate
+Opensession – opens new session
+
+Q5) get vs load
+
+Laod supports lazy loading and throws exception in case of data not found
+Q6)Caching
+  First level cahce – associated with session object  - enabled by default
+  Second level cache – disabled by – enabe using @Cahce annotation at entity – eg EHCache
+
+
+Q7)ACID
+
+Atomicity – all or nothing
+Consistency- constraint check , unique key in a relational database.
+Isolation- one transaction is isolated from other
+Durablity- commit persists
+
+CRUD operations
+Q8)N+1 problem – lazy loading of data from the database happens when a query is made for a parent record, and then an additional query for every single child record.
+1) instead of find all use @Query annotation selction from department left  join fetch p.listofemployees
+2)EntityGraph
+
+
+Q9)Transaction Rollback-@Transactional( rollbackFor = SQLException.class)
+
+@Transactional(Progration.NEVER, MANDATORY, REQUIRESNEW)
+@Transactional(Readonly =true) - ensure safety ,framework improves performance by skipping lock related optimization.
+
+SQL  - index for unique constraints -n inner join matches all records between tables but only returns matching values. It is the intersection of two tables. The cross join will display all the rows of both tables.

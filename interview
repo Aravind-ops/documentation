@@ -761,7 +761,7 @@ Q8)N+1 problem – lazy loading of data from the database happens when a query i
 Q9)Transaction Rollback-@Transactional( rollbackFor = SQLException.class)
 
 @Transactional(Progration.NEVER, MANDATORY, REQUIRESNEW)
-
+@Transactional(Readonly =true) - ensure safety ,framework improves performance by skipping lock related optimization.
 
 SQL  - index for unique constraints -n inner join matches all records between tables but only returns matching values. It is the intersection of two tables. The cross join will display all the rows of both tables.
 
