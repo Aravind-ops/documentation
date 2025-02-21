@@ -1,0 +1,57 @@
+1)
+https://www.toptal.com/spring/spring-boot-oauth2-jwt-rest-protection
+
+
+Authorization request is sent from client to server (acting as resource owner) using password authorization grant
+Access token is returned to the client (along with refresh token)
+Access token is then sent from client to server (acting as resource server) on each request for protected resource access
+Server responds with required protected resources
+
+
+jwt token with signature verification --> need to get jwks keyset & verify signature  using key
+signedjwt can also be parsed--> only signature part is rsa encrypted.
+
+
+
+common websecurity config\
+
+@WebSecurity
+
+extends WebSecuirtyAdadptorConfig{
+@OVeride
+config((HttpSecurity httpsecuity)){
+(httpsecurity.antmatcheers).(/).permilall().
+.anyRequest.Authenicated().
+csrf.disable()
+}
+
+
+
+---------------------------------------------------------------------
+
+with cors
+
+If we use Spring Security in our project,
+we must take an extra step to make sure it plays well with CORS. That’s because CORS needs to be processed first.
+ Otherwise, Spring Security will reject the request before it reaches Spring MVC.
+even if it is implemented at controller layer using @CrossORigin annotation
+
+
+Luckily, Spring Security provides an out-of-the-box solution:
+inside websecurityadaptor config
+
+@Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source =
+            new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+
+
+    --------------------------------------------------------------------------------------------------------------

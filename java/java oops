@@ -6,11 +6,55 @@ Overcome reflection issue: To overcome issue raised by reflection, enums are use
 Cloneing- clone not supported
 Serialization – read resolve()
 
+
+public singleton implements serializable,clonable{
+
+ public static final Singleton INSTANCE = new Singleton();
+ private Singleton(){
+ }
+ public static getinstance(){
+ if(null==oinsance){
+ return new Singleton();
+ }
+  INSTANCE;
+
+ }
+override
+readresolve(){
+///to avoid de serialization
+}
+
+Overide
+clone(){
+throw clone not supported
+}
+
+
+Using
+public enum SingletonEnum {
+    INSTANCE;
+
+    int value;
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+}
+
+SingleTonEnum.INSTANCE.value
+
+
+
+
 SerialVersionUID The Serialization runtime associates a version number with each Serializable class called a SerialVersionUID, which is used during Deserialization to verify that sender and receiver of a serialized object have loaded classes for that object which are compatible with respect to serialization. If the receiver has loaded a class for the object that has different UID than that of corresponding sender’s class, the Deserialization will result in an InvalidClassException.
 
 How to Create an Immutable Class in Java with Example | Programming Mitra
 ----------------------------------------------------------------
-3)records from java 17
+3)records from java 14
 Immutable- final variables, final methods, copy constructor, no setter- used for concurrent programming
 where immutability makes an especially big difference is concurrency: immutable objects can safely be shared among multiple threads, whereas mutable objects must be made thread-safe via careful design and implementation - usually this is far from a trivial task.
 ---------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,47 @@
+1)Mono vs Flux
+
+Mono emits zero or one element, while Flux emits zero to many
+
+---------------
+
+2)Webclient.builder.uri()
+.header().
+method().
+cookies().
+build().
+
+-----------------------
+
+3)retrieve vs excange
+
+retreive- to get response body
+exchange to get complete response
+
+-----------------------------------------------------
+
+4)get
+
+Mono<Response>=retrieve().bodyTOMono(Response.class);
+
+post
+
+.body(Mono.just(entity,Request.class),
+.retreive().bodyTOMono(Response.class)
+
+
+-----------------------------------------------------------
+
+5)Exceptionhandling
+
+
+1)based on exception class
+
+.onErrorMap(Exception.class, errorResponse -> new GenericException("Generic exception", ex)
+
+2)based on statuc coe
+
+.onStatus(HttpStatus::is4xxClientError, errorResponse -> Mono.error(new ClientErrorException("Client error"))
+
+--------------------
+
+6).block() -> standard blocking call like rest template

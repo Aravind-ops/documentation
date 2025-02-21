@@ -1,0 +1,23 @@
+1)
+# Use an official OpenJDK runtime as a parent image
+FROM  jdk
+
+#set working directory before building image
+# Set the working directory to /app
+ADD target/app.jar app
+
+
+EXPOSE 8080
+
+
+entrypOINT["java"- "jar" "app.jar"]
+
+
+2)Docker compose file
+
+Docker-compose
+ sevices:
+   app:
+    image:
+   myswl:
+    image:

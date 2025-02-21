@@ -9,3 +9,10 @@ Kubernetes NodePort vs LoadBalancer vs Ingress? When should I use what? | by San
 Kubernetes 101: Pods, Nodes, Containers, and Clusters | by Daniel Sanche | Google Cloud - Community | Medium
 https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
 https://medium.com/google-cloud/kubernetes-101-pods-nodes-containers-and-clusters-c1509e409e16
+
+
+3) suitable for hybrid deployment
+
+spec:
+  type: ExternalName
+  externalName: my.database.example.com
