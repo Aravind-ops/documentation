@@ -1,1 +1,29 @@
+1)How to break Singleton  design pattern
+2)How to prevent Singleton Pattern from Reflection, Serialization and Cloning? - GeeksforGeeks
 
+Overcome reflection issue: To overcome issue raised by reflection, enums are used because java ensures internally that enum value is instantiated only once. Since java Enums are globally accessible, they can be used for singletons. Its only drawback is that it is not flexible i.e it d
+
+Cloneing- clone not supported
+Serialization – read resolve()
+
+SerialVersionUID The Serialization runtime associates a version number with each Serializable class called a SerialVersionUID, which is used during Deserialization to verify that sender and receiver of a serialized object have loaded classes for that object which are compatible with respect to serialization. If the receiver has loaded a class for the object that has different UID than that of corresponding sender’s class, the Deserialization will result in an InvalidClassException.
+
+How to Create an Immutable Class in Java with Example | Programming Mitra
+----------------------------------------------------------------
+3)records from java 17
+Immutable- final variables, final methods, copy constructor, no setter- used for concurrent programming
+where immutability makes an especially big difference is concurrency: immutable objects can safely be shared among multiple threads, whereas mutable objects must be made thread-safe via careful design and implementation - usually this is far from a trivial task.
+---------------------------------------------------------------------------------------------------------------------
+3)Java difference between abstract class and interface
+   Static methods in interface – utility methods only at interface level
+   Default metods in interface[how to solve diamond problem] – multiple inheritance using interface only not class
+Interfacenmae.super.method()- 
+f any backward compatability is required place it inside default method.
+ it is not mandatory to override (provide body) it in the classes that are already implementing this interface.
+  
+Interface  is implicit public static final
+Enum implicit static final
+
+
+static method override -->method hiding
+-----------------------------
