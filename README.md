@@ -154,3 +154,4 @@ CQRS (Command Query Responsibility Segregation) helps with another important fea
 
 Generally, NoSQL databases are designed for horizontal scalability and high availability, so they are not focused on offering ACID transactions. At times the data will not be consistent, which means they are not well-suited for transactions that require immediate integrity, such as banking and ATM transactions.
 # documentation
+#git commit
