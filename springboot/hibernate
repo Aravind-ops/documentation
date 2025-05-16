@@ -99,3 +99,17 @@ Q9)Transaction Rollback-@Transactional( rollbackFor = SQLException.class)
 @Transactional(Readonly =true) - ensure safety ,framework improves performance by skipping lock related optimization.
 
 SQL  - index for unique constraints -n inner join matches all records between tables but only returns matching values. It is the intersection of two tables. The cross join will display all the rows of both tables.
+
+
+
+
+Q10)CAP vs ACID theorom
+
+consistency vs availability trade off in no sql
+
+consistency -  same data is available in all node in no sql context
+consistency - valid data is inserted to db in rbdms in complaince with unique , primary key constraints.
+
+
+
+Q11) avoid index with null values , frequent updates --index internally creates a balanced tree data structure

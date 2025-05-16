@@ -1,0 +1,80 @@
+Coding
+
+Mandatory
+
+String
+https://www.geeksforgeeks.org/minimum-distance-between-words-of-a-string/
+https://www.geeksforgeeks.org/given-a-string-find-its-first-non-repeating-character/
+longest uniform substring - https://www.geeksforgeeks.org/length-of-the-longest-substring-without-repeating-characters/
+First non repeating character - https://www.geeksforgeeks.org/given-a-string-find-its-first-non-repeating-character/
+
+Binary String
+https://www.geeksforgeeks.org/number-flips-make-binary-string-alternate/
+
+Stack
+Check if an array is stack sortable –
+https://www.geeksforgeeks.org/check-array-stack-sortable/
+https://www.geeksforgeeks.org/convert-infix-prefix-notation/
+Implement queue using stack –
+https://www.geeksforgeeks.org/queue-using-stacks/
+
+Miscellaneous
+https://www.careercup.com/question?id=5713593060818944
+Program to check strength of password –https://www.geeksforgeeks.org/program-check-strength-password/
+Parsing Apache Access Log –
+https://www.geeksforgeeks.org/parsing-apache-access-log-in-java/
+
+Prime Factors of a given number
+https://www.geeksforgeeks.org/print-all-prime-factors-of-a-given-number/
+
+Matrix
+https://www.geeksforgeeks.org/print-a-given-matrix-in-spiral-form/
+Greedy Algorithm
+https://www.geeksforgeeks.org/minimum-number-platforms-required-railwaybus-station/
+
+Graph
+https://www.geeksforgeeks.org/size-of-the-largest-trees-in-a-forest-formed-by-the-given-graph/
+
+Dynamic Programming
+https://www.geeksforgeeks.org/count-ways-reach-nth-stair-using-step-1-2-3/
+https://leetcode.com/discuss/interview-question/1369452/goldman-sachs-coderpad-interview-question-magic-potion-help
+https://www.geeksforgeeks.org/josephus-problem/
+Dynamic Programming to reach end of the array - https://www.geeksforgeeks.org/minimum-number-of-jumps-to-reach-end-of-a-given-array/
+
+Depth First Search
+Find number of islands using DFS - https://www.geeksforgeeks.org/find-the-number-of-islands-using-dfs/
+Binary Tree
+Binary Tree Problem to Find sum of all root to leaf paths - https://www.geeksforgeeks.org/find-all-root-to-leaf-path-sum-of-a-binary-tree/
+
+Array
+Find median of two sorted arrays - https://www.geeksforgeeks.org/median-of-two-sorted-arrays-of-different-sizes/
+Mean and median of unsorted array - https://www.geeksforgeeks.org/program-for-mean-and-median-of-an-unsorted-array/
+Smallest Subarrays with sum greater than given value
+https://www.geeksforgeeks.org/minimum-length-subarray-sum-greater-given-value/
+Find maximum of an array without iterating the whole array.
+Find cycle in array
+https://leetcode.com/discuss/interview-question/1218147/goldman-coderpad
+https://rite2riddhi.medium.com/decoding-cycles-in-array-34ce7d2d4a15
+Second smallest element in array - https://www.geeksforgeeks.org/to-find-smallest-and-second-smallest-element-in-an-array/
+Robot returns to origin - https://leetcode.com/problems/robot-return-to-origin/description/
+Power of a number - https://www.programiz.com/java-programming/examples/power-number
+Pascal Triangle – https://www.geeksforgeeks.org/java-program-to-print-pascals-triangle/
+Second smallest number from the list
+Longest uniform subsequence
+Sliding Window Technique
+https://www.geeksforgeeks.org/window-sliding-technique/
+Two Pointer Technique
+https://www.geeksforgeeks.org/two-pointers-technique/
+Trapping Rain Water - https://www.geeksforgeeks.org/trapping-rain-water/
+Documented client interview experience –
+https://www.geeksforgeeks.org/goldman-sachs-interview-experience-3/
+https://www.geeksforgeeks.org/goldman-sachs-interview-experience-set-26-experienced/
+https://www.glassdoor.co.in/Interview/Q1-Array-of-tuples-each-tuple-is-a-student-and-his-test-score-Find-the-maximum-average-score-of-all-students-Q2-Array-QTN_3565373.htm
+
+LinkedLIst
+https://www.geeksforgeeks.org/find-length-of-loop-in-linked-list/
+Detect loop in linkedlist - https://www.geeksforgeeks.org/detect-loop-in-a-linked-list/
+Deque Implementation - https://www.geeksforgeeks.org/implementation-deque-using-doubly-linked-list/
+Delete nth node from the linkedlist
+ReOrder Given LinkedList - https://www.prepbytes.com/blog/linked-list/reorder-list/
+https://www.geeksforgeeks.org/reverse-doubly-linked-list-using-recursion/
