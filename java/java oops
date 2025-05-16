@@ -69,5 +69,11 @@ Interface  is implicit public static final
 Enum implicit static final
 
 
+interface  a
+
+interface b
+
+interface c
+
 static method override -->method hiding
 -----------------------------

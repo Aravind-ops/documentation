@@ -5,7 +5,7 @@ Collections
 
 
 
-Iterators are used in the Collection framework in Java to retrieve elements one by one. There are three iterators in Java
+1)Iterators are used in the Collection framework in Java to retrieve elements one by one. There are three iterators in Java
 Enumeration
 Iterator
 ListIterator
@@ -28,7 +28,9 @@ In for-each loop, we can’t modify collection, it will throw a ConcurrentModifi
 
 Modifying a collection simply means removing an element or changing content of an item stored in the collection. This occurs because for-each loop implicitly creates an iterator but it is not exposed to the user thus we can’t modify the items in the collections.
 FAQ
-Arraylist  vs Vector
+
+------------------------------------------------------------------------------------------------------------------------------
+2)Arraylist  vs Vector
 
 Performance: ArrayList is faste
 Data Growth: ArrayList and Vector both grow and shrink dynamically to maintain optimal use of storage – but the way they resize is different. ArrayList increments 50% of the current array size if the number of elements exceeds its capacity, while vector increments 100% – essentially doubling the current array size.
@@ -40,64 +42,8 @@ Manipulating ArrayList takes more time due to the internal implementation. Whene
 This class implements a List interface. Therefore, this acts as a list.	This class implements both the List interface and the Deque interface. Therefore, it can act as a list and a deque.
 
 This class works better when the application demands storing the data and accessing it.	This class works better when the application demands manipulation of the stored data.
-
-
-\
-Differences between TreeMap, HashMap and LinkedHashMap in Java
-
-HashMap: HashMap offers 0(1) lookup and insertion
-public class HashMap extends AbstractMap
-implements Map,Cloneable, Serializable
-A HashMap contains values based on the key.
-It contains only unique elements.
-It may have one null key and multiple null values.
-It maintains no order.
-LinkedHashMap
-public class LinkedHashMap extends HashMap
-implements Map
-A LinkedHashMap contains values based on the key.
-It contains only unique elements.
-It may have one null key and multiple null values.
-It is same as HashMap instead maintains insertion order.
-3.TreeMap: TreeMap offers O(log N) lookup and insertion. Keys are ordered, so if you need to iterate through the keys in sorted order, you can. This means that keys must implement the Comparable interface. TreeMap is implemented by a Red-Black Tree.
-A TreeMap contains values based on the key. It implements the NavigableMap interface and extends AbstractMap class.
-It contains only unique elements.
-It cannot have null key but can have multiple null values.
-It is same as HashMap instead maintains ascending order(Sorted using the natural order of its key).
-
-Hashtable: “Hashtable” is the generic name for hash-based maps.
-Syntax:
-public class Hashtable extends Dictionary implements
-Map, Cloneable, Serializable
-
-A Hashtable is an array of list. Each list is known as a bucket. The position of bucket is identified by calling the hashcode() method. A Hashtable contains values based on the key.
-It contains only unique elements.
-It may have not have any null key or value.
-It is synchronized.
-It is a legacy class.
-WeakHashMap
-
-WeakHashMap is an implementation of the Map interface. WeakHashMap is almost same as HashMap except in case of
-WeakHashMap, if object is specified as key doesn’t contain any references
-- it is eligible for garbage collection even though it is associated with WeakHashMap.
-i.e Garbage Collector dominates over WeakHashMap.
-
-only key is removed & values are not garbage collected.
-
-Map.put(key,value);
-Map.put(4,value);
-Map.get(4)=null;
-System.put(d," Hi ");
-WeakHashMap m = new WeakHashMap();
-        Demo d = new Demo();
-
-        // puts an entry into WeakHashMap
-
-        System.out.println(m);
-
-        d = null;
-         m.gc  // not eligible for garbage collection in case of hashmap & null is valid key in hash map value of hashcode*null=0;
-
+--------------------------------------------------------------------------------------------------------------------------------------------
+3)
 Internal working of Hash map
 Internal Working of HashMap in Java - GeeksforGeeks
 index = hashCode(key) & (n-1).
@@ -167,8 +113,99 @@ specified as it’s key and constant Object called “PRESENT”
 Duplicates not allowed in set -
 we know in a HashMap each key is unique and when we call put(Key, Value) method, it returns the previous value associated with key, or null if there was no mapping for key. So in add() method we check the return value of map.put(key, value) method with null value.
 Objects that you insert in HashSet are not guaranteed to be inserted in the same order. Objects are inserted based on their hash code.
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+4)
+Differences between TreeMap, HashMap and LinkedHashMap in Java
+
+HashMap: HashMap offers 0(1) lookup and insertion
+public class HashMap extends AbstractMap
+implements Map,Cloneable, Serializable
+A HashMap contains values based on the key.
+It contains only unique elements.
+It may have one null key and multiple null values.
+It maintains no order.
+LinkedHashMap
+public class LinkedHashMap extends HashMap
+implements Map
+A LinkedHashMap contains values based on the key.
+It contains only unique elements.
+It may have one null key and multiple null values.
+It is same as HashMap instead maintains insertion order.
+3.TreeMap: TreeMap offers O(log N) lookup and insertion. Keys are ordered, so if you need to iterate through the keys in sorted order, you can. This means that keys must implement the Comparable interface. TreeMap is implemented by a Red-Black Tree.
+A TreeMap contains values based on the key. It implements the NavigableMap interface and extends AbstractMap class.
+It contains only unique elements.
+It cannot have null key but can have multiple null values.
+It is same as HashMap instead maintains ascending order(Sorted using the natural order of its key).
 
 
+
+
+
+🔍 HashMap - Fast & Unordered
+- Stores elements in a hash table based on computed hash codes.
+- No guarantee of insertion order—entries may appear in random order during iteration.
+- Uses buckets to group entries with the same hash code and resolves collisions via linked lists or balanced trees (since Java 8).
+- Efficient for lookups (O(1) time complexity) but lacks predictability in order.
+
+
+Hashtable: “Hashtable” is the generic name for hash-based maps.
+Syntax:
+public class Hashtable extends Dictionary implements
+Map, Cloneable, Serializable
+
+A Hashtable is an array of list. Each list is known as a bucket. The position of bucket is identified by calling the hashcode() method. A Hashtable contains values based on the key.
+It contains only unique elements.
+It may have not have any null key or value.
+It is synchronized.
+It is a legacy class.
+
+
+LinkedHashMap - Ordered & Efficient
+- Extends HashMap but adds a linked list that maintains insertion order.
+- Internally, each entry is linked to the previous and next entries in a doubly linked list.
+- When iterating, it follows this linked list, preserving the order elements were inserted.
+- Supports access-order mode, useful for implementing LRU (Least Recently Used) caching.
+Key Differences:
+| Feature | HashMap | LinkedHashMap |
+| Ordering | No insertion order | Maintains insertion order |
+| Performance | O(1) for get() & put() | Slight overhead due to linked list |
+| Memory Usage | Lower (just hash table) | Higher (linked list + hash table) |
+| Usage | General-purpose fast lookups | Cache design & predictable iteration |
+
+
+So, if you need ordering, go for LinkedHashMap. If ordering doesn’t matter, HashMap is a great, lightweight choice.
+Want a code example to see these differences in action? Let me know! 🚀
+
+
+
+
+
+WeakHashMap
+
+WeakHashMap is an implementation of the Map interface. WeakHashMap is almost same as HashMap except in case of
+WeakHashMap, if object is specified as key doesn’t contain any references
+- it is eligible for garbage collection even though it is associated with WeakHashMap.
+i.e Garbage Collector dominates over WeakHashMap.
+
+only key is removed & values are not garbage collected.
+
+Map.put(key,value);
+Map.put(4,value);
+Map.get(4)=null;
+System.put(d," Hi ");
+WeakHashMap m = new WeakHashMap();
+        Demo d = new Demo();
+
+        // puts an entry into WeakHashMap
+
+        System.out.println(m);
+
+        d = null;
+         m.gc  // not eligible for garbage collection in case of hashmap & null is valid key in hash map value of hashcode*null=0;
+
+............................................................................................................................................
+5)
 Iterator.remove() – no exception- checks for modcount
 List.remove()-concurrentModificationException
 final void checkForComodification() {

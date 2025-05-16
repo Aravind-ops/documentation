@@ -19,9 +19,7 @@ Since Kafka is a log, the messages are always present there. We can have a messa
 Topic- this is where message is published from producer.
 Consumer – group of consumers who are going to consume the given topic
 
-Same message in a topic can be consumed by multiple consumers which is published to multiple topics
-Same consumer can consume multiple topic
-Kafka ensures that within a consumer group,
+
 no two consumers read the same message, thus each message is processed only once per group.
 
 
