@@ -95,6 +95,12 @@ Q8)N+1 problem – lazy loading of data from the database happens when a query i
 
 Q9)Transaction Rollback-@Transactional( rollbackFor = SQLException.class)
 
+
+In Hibernate, transaction propagation defines how transactions interact with each other when a method
+is called within another transactional method. Spring provides several propagation types
+ to control transaction behavior.
+
+
 @Transactional(Progration.NEVER, MANDATORY, REQUIRESNEW)
 @Transactional(Readonly =true) - ensure safety ,framework improves performance by skipping lock related optimization.
 
@@ -113,3 +119,16 @@ consistency - valid data is inserted to db in rbdms in complaince with unique , 
 
 
 Q11) avoid index with null values , frequent updates --index internally creates a balanced tree data structure
+
+
+Q12)
+
+hers. The four main isolation levels are:
+- Read Uncommitted – Transactions can read uncommitted changes made by other transactions, leading to possible dirty reads.
+- Read Committed – Transactions can only read committed changes, preventing dirty reads but allowing non-repeatable reads.
+- Repeatable Read – Ensures that if a transaction reads the same data multiple times, it remains unchanged, preventing non-repeatable reads but allowing phantom reads.
+- Serializable – The highest isolation level, ensuring full consistency by locking the data, preventing phantom reads but reducing concur
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+
+
+Q13)Propgation types in Q9

@@ -47,6 +47,123 @@ public enum SingletonEnum {
 
 SingleTonEnum.INSTANCE.value
 
+Double Checked locking pattern
+
+Today
+java singleton design pattern example
+Certainly! The Singleton design pattern ensures that a class has only one instance and provides a global point of access to that instance. Here's an example of implementing the Singleton pattern in Java:
+
+java
+// Singleton Class
+public class Singleton {
+    // Private static instance of the class
+    private static Singleton instance;
+
+    // Private constructor to restrict instantiation from outside
+    private Singleton() {}
+
+    // Public method to provide access to the instance
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+
+    // Example method
+    public void showMessage() {
+        System.out.println("Hello from Singleton!");
+    }
+}
+
+// Example Usage
+public class Main {
+    public static void main(String[] args) {
+        // Get the Singleton instance
+        Singleton singleton = Singleton.getInstance();
+
+        // Call a method on the Singleton instance
+        singleton.showMessage();
+    }
+}
+Explanation:
+Private Constructor: Prevents direct instantiation from outside the class.
+
+Static Instance: Holds the single instance of the class.
+
+Public Static Method (getInstance()): Creates the instance if it doesn't exist and returns it.
+
+This approach is known as Lazy Initialization, where the instance is created only when it's needed. However, it is not thread-safe. For a thread-safe Singleton, you can use the synchronized keyword or implement double-checked locking.
+
+Would you like an example of a thread-safe Singleton as well? 😊
+
+Show me a thread-safe Singleton example.
+Certainly! A thread-safe Singleton ensures that multiple threads accessing the getInstance()
+method don't create multiple instances. Here's a double-checked locking approach to achieve thread safety:
+
+
+public class ThreadSafeSingleton {
+    // Volatile ensures visibility of changes across threads
+    private static volatile ThreadSafeSingleton instance;
+
+    // Private constructor to prevent instantiation
+    private ThreadSafeSingleton() {}
+
+    // Double-checked locking approach
+    public static ThreadSafeSingleton getInstance() {
+        if (instance == null) {  // First check (without synchronization)
+            synchronized (ThreadSafeSingleton.class) {  // Locking
+                if (instance == null) {  // Second check (with synchronization)
+                    instance = new ThreadSafeSingleton();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void showMessage() {
+        System.out.println("Thread-safe Singleton instance!");
+    }
+}
+
+// Example Usage
+public class Main {
+    public static void main(String[] args) {
+        ThreadSafeSingleton singleton = ThreadSafeSingleton.getInstance();
+        singleton.showMessage();
+    }
+}
+
+
+Bill push
+
+
+public class BillPughSingleton {
+    // Private constructor to prevent instantiation
+    private BillPughSingleton() {}
+
+    // Inner static helper class, initialized only when getInstance() is called
+    private static class SingletonHelper {
+        private static final BillPughSingleton INSTANCE = new BillPughSingleton();
+    }
+
+    // Public method to provide the Singleton instance
+    public static BillPughSingleton getInstance() {
+        return SingletonHelper.INSTANCE;
+    }
+
+    public void showMessage() {
+        System.out.println("Bill Pugh Singleton instance!");
+    }
+}
+
+// Example Usage
+public class Main {
+    public static void main(String[] args) {
+        BillPughSingleton singleton = BillPughSingleton.getInstance();
+        singleton.showMessage();
+    }
+}
 
 
 

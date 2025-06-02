@@ -79,6 +79,12 @@ why field injection is not recommended
       4)Chance of null pointer execeptions as field injection invoked after constructor inititalization.
 
 
+Field injection itself does not enable lazy loading, but you can make a field lazy-loaded by using the @Lazy annotation in Spring.
+Lazy Loading with Field Injection
+By default, Spring initializes all singleton beans eagerly at startup.
+ However, if you want a bean to be initialized only when it is first accessed, you can use @Lazy
+
+
       ------------------------------------------------------------------------------------------
 
       Constructor injection
@@ -165,9 +171,11 @@ why field injection is not recommended
 
         5)Spring Boot lets you wire beans that you may not be aware you need. It also showed how to turn on convenient management services. However, Spring Boot does more than that. It supports not only traditional WAR file deployments but also lets you put together executable JARs, thanks to Spring Boot’s loader module. The various guides demonstrate this dual support through the spring-boot-gradle-plugin and spring-boot-maven-plugin.
 
-          The Library project has no class with a main method (because it is not an application). Consequently, you have to tell the build system to not try to build an executable jar for the Library project. (By default, the Spring Initializr builds executable projects.)
+          The Library project has no class with a main method (because it is not an application).
+           Consequently, you have to tell the build system to not try to build an executable jar for the Library project. (By default, the Spring Initializr builds executable projects.)
 
-          To tell Maven to not build an executable jar for the Library project, you must remove the following block from the pom.xml created by the Spring Initializr:
+          To tell Maven to not build an executable jar for the Library project,
+          you must remove the following block from the pom.xml created by the Spring Initializr:
 
           org.springframework.boot spring-boot-maven-plugin
           gradle option
@@ -205,3 +213,65 @@ why field injection is not recommended
 
           ApplicationContext context= new AnnotationConfigApplicationContext(Myclass.class);
          MyBean mybean= context.getbean("Mybean.class");
+
+
+
+         --------------------------------------------------------------------------------------------------------------
+
+         6)Springboot actuators
+
+
+         1)- What are some commonly used Actuator endpoints?
+           Some commonly used endpoints include:
+           - /actuator/health - Provides application health status.
+           - /actuator/info - Displays application information.
+           - /actuator/metrics - Shows various metrics like memory usage, request count, etc.
+           - /actuator/env - Displays environment properties.
+           -/actuator/shutdown - graceful shutdown
+           /actuator/threaddump: Performs a thread dump, which can be useful for diagnosing deadlocks or performance issues.
+           /actuator/heapdump: Creates a heap dump file,
+
+
+           management.endpoint.health.show-details=always
+           management.endpoints.web.exposure.include=health,info
+
+
+           2)  - Can you create custom Actuator endpoints?
+               Yes, you can create custom endpoints using the @Endpoint annotation. Example:
+               @Endpoint(id = "customEndpoint")
+               @Component
+               public class CustomEndpoint {
+                   @ReadOperation
+                   public String customMethod() {
+                       return "Custom Actuator Endpoint";
+                   }
+               }
+
+
+
+
+
+         3) How do you secure Actuator endpoints?
+           Answer: Securing Actuator endpoints is crucial, especially in production environments, as they can expose sensitive information.
+
+           Spring Security Integration: If spring-boot-starter-security is on the classpath, Spring Boot automatically secures all Actuator endpoints (except /health and /info) by default. You can then configure roles and authentication mechanisms (e.g., basic auth, OAuth2) using Spring Security.
+           Custom Security Configuration: You can define your own SecurityFilterChain bean to customize security rules for Actuator endpoints. For example, to restrict access to certain roles:
+           Java
+
+           @Configuration
+           public class ActuatorSecurityConfig {
+
+               @Bean
+               public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+                   http
+                       .authorizeHttpRequests(authorize -> authorize
+                           .requestMatchers("/actuator/health", "/actuator/info").permitAll()
+                           .requestMatchers("/actuator/**").hasRole("ADMIN")
+                           .anyRequest().authenticated()
+                       )
+                       .httpBasic(Customizer.withDefaults()); // Or formLogin, etc.
+                   return http.build();
+               }
+           }
+
+

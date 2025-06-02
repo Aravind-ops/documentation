@@ -170,7 +170,7 @@ static <U> CompletableFuture<U>	supplyAsync(Supplier<U> supplier, Executor execu
 
 
 ------------------------------------------------------------------------------------------------------
-
+Q11)
 Virtual threads in Java are a lightweight threading mechanism introduced in **Project Loom** (Java 19 preview, Java 21 stable). They provide an efficient way to handle concurrent tasks **without the overhead of traditional platform threads**. Here’s a breakdown:
 
 ### **🔹 What Are Virtual Threads?**
@@ -255,3 +255,323 @@ While Java abstracts many complexities via the JVM, the OS is always involved in
 - Process Management – The JVM itself is a native process created by the OS when you run a Java program (e.g., java MyApp).
 - Memory Management – The OS allocates heap & stack memory to JVM processes, ensuring efficient execution.
 - Thread Handling – Java platform threads are mapped to OS threads, meaning the OS scheduler controls thread execution.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Q12) ReEntrant Lock
+
+
+In Java, a reentrant lock is a synchronization mechanism that allows a thread to acquire the same lock multiple times without causing a deadlock.
+### Basic Usage Example
+
+Here’s a simple example demonstrating how to use `ReentrantLock`:
+
+```java
+import java.util.concurrent.locks.ReentrantLock;
+
+public class ReentrantLockExample {
+    private final ReentrantLock lock = new ReentrantLock();
+
+    public void method() {
+        lock.lock(); // Acquire the lock
+        try {
+            // Critical section
+            System.out.println(Thread.currentThread().getName() + " is in the method.");
+            // Call another method that also tries to acquire the lock
+            anotherMethod();
+        } finally {
+            lock.unlock(); // Always unlock in a finally block
+        }
+    }
+
+    public void anotherMethod() {
+        lock.lock(); // Re-acquire the lock
+        try {
+            // Critical section
+            System.out.println(Thread.currentThread().getName() + " is in anotherMethod.");
+        } finally {
+            lock.unlock(); // Always unlock in a finally block
+        }
+    }
+
+    public static void main(String[] args) {
+        ReentrantLockExample example = new ReentrantLockExample();
+
+        // Create threads that will call the method
+        Thread thread1 = new Thread(example::method, "Thread-1");
+        Thread thread2 = new Thread(example::method, "Thread-2");
+
+        thread1.start();
+        thread2.start();
+    }
+}
+```
+
+### Explanation:
+1. **Lock Acquisition**: The `lock()` method is called to acquire the lock. If the lock is already held by another thread, the current thread will block until the lock is available.
+2. **Reentrancy**: The same thread can call `anotherMethod()` while holding the lock, and it will successfully acquire the lock again.
+3. **Unlocking**: It’s crucial to call `unlock()` in a `finally` block to ensure that the lock is released even if an exception occurs.
+
+### Fairness
+You can create a fair `ReentrantLock` by passing `true` to the constructor:
+
+```java
+ReentrantLock fairLock = new ReentrantLock(true);
+```
+
+This ensures that threads acquire the lock in the order they requested it.
+
+### Conclusion
+`ReentrantLock` is a powerful tool for managing concurrency in Java applications. It provides more flexibility than synchronized blocks, especially in complex scenarios where you need to manage multiple conditions or require fair access to resources.
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q13)
+
+
+PriorityQueue and BlockingQueue are two distinct types of queues in Java, each serving different purposes, particularly in concurrent programming.
+### 1. `java.util.PriorityQueue`
+
+A `PriorityQueue` is an **unbounded priority queue** based on a priority heap.
+Elements of the priority queue are ordered according to their natural ordering, or by a `Comparator` provided at queue construction time,
+ depending on which constructor is used.
+
+**Key Characteristics:**
+
+* **Priority-Based Ordering:** Elements are retrieved based on their priority, not necessarily in the order they were inserted (FIFO).
+* **Unbounded (Logically):** It can grow as large as needed, limited only by available memory.
+* **Not Thread-Safe:** It's *not* designed for concurrent access by multiple threads. If you need a thread-safe priority queue, you'd typically use `PriorityBlockingQueue` (discussed later) or wrap `PriorityQueue` with synchronization mechanisms.
+* **Heap-Based:** Internally, it uses a min-heap data structure to efficiently manage priorities.
+ The smallest element (highest priority in a min-heap) is always at the root.
+
+**Example:**
+
+Let's say we have a list of tasks with different priority levels. We want to process the highest priority tasks first.
+
+```java
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+class Task {
+    private String name;
+    private int priority; // Lower number indicates higher priority
+
+    public Task(String name, int priority) {
+        this.name = name;
+        this.priority = priority;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+               "name='" + name + '\'' +
+               ", priority=" + priority +
+               '}';
+    }
+}
+
+public class PriorityQueueExample {
+    public static void main(String[] args) {
+        // Create a PriorityQueue for Tasks
+        // We provide a Comparator to define priority: lower 'priority' value means higher priority
+        PriorityQueue<Task> taskQueue = new PriorityQueue<>(
+            Comparator.comparingInt(Task::getPriority)
+        );
+
+        // Add tasks to the queue
+        taskQueue.offer(new Task("Write documentation", 3));
+        taskQueue.offer(new Task("Fix critical bug", 1));
+        taskQueue.offer(new Task("Refactor legacy code", 4));
+        taskQueue.offer(new Task("Implement new feature", 2));
+        taskQueue.offer(new Task("Attend team meeting", 1)); // Another high-priority task
+
+        System.out.println("Processing tasks in priority order:");
+
+        // Process tasks until the queue is empty
+        while (!taskQueue.isEmpty()) {
+            Task task = taskQueue.poll(); // Retrieves and removes the highest priority task
+            System.out.println("Processing: " + task);
+        }
+    }
+}
+```
+
+**Output:**
+
+```
+Processing tasks in priority order:
+Processing: Task{name='Fix critical bug', priority=1}
+Processing: Task{name='Attend team meeting', priority=1}
+Processing: Task{name='Implement new feature', priority=2}
+Processing: Task{name='Write documentation', priority=3}
+Processing: Task{name='Refactor legacy code', priority=4}
+```
+
+Notice how "Fix critical bug" and "Attend team meeting" (both priority 1) were processed first, followed by priority 2, 3, and 4. The order of tasks with the same priority is not guaranteed.
+
+### 2. `java.util.concurrent.BlockingQueue`
+
+`BlockingQueue` is an interface that extends `java.util.Queue`. It's designed for use in **producer-consumer scenarios** and other concurrent applications. The "blocking" aspect means that operations can wait (block) if the queue is empty or full.
+
+**Key Characteristics:**
+
+* **Thread-Safe:** All implementations of `BlockingQueue` are thread-safe. They handle synchronization internally.
+* **Blocking Operations:**
+    * **Insertion (`put()`):** If the queue is full, `put()` will block until space becomes available.
+    * **Retrieval (`take()`):** If the queue is empty, `take()` will block until an element becomes available.
+* **Non-Blocking Alternatives:** It also provides non-blocking operations like `offer()`, `poll()`, `add()`, and `remove()`, which return `false` or `null` if the operation cannot be performed immediately, or throw an exception.
+* **Bounded or Unbounded:** Implementations can be bounded (fixed capacity) or unbounded (capacity limited only by memory).
+* **Common Implementations:**
+    * `ArrayBlockingQueue`: Bounded, backed by an array, FIFO.
+    * `LinkedBlockingQueue`: Optionally bounded (default unbounded), backed by a linked list, FIFO.
+    * `PriorityBlockingQueue`: Unbounded, a thread-safe version of `PriorityQueue`.
+    * `DelayQueue`: Stores elements that can only be retrieved after a given delay.
+    * `SynchronousQueue`: A queue of size one, where each insert operation must wait for a corresponding remove operation, and vice versa.
+
+**Example: Producer-Consumer using `ArrayBlockingQueue`**
+
+This classic example demonstrates how `BlockingQueue` facilitates communication between a producer thread (adding items) and a consumer thread (removing items).
+
+```java
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+// Producer Thread
+class Producer implements Runnable {
+    private BlockingQueue<Integer> queue;
+    private int startValue;
+
+    public Producer(BlockingQueue<Integer> queue, int startValue) {
+        this.queue = queue;
+        this.startValue = startValue;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            int value = startValue + i;
+            try {
+                System.out.println(Thread.currentThread().getName() + " producing: " + value);
+                queue.put(value); // Blocks if the queue is full
+                Thread.sleep(500); // Simulate some work
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.out.println(Thread.currentThread().getName() + " interrupted.");
+            }
+        }
+    }
+}
+
+// Consumer Thread
+class Consumer implements Runnable {
+    private BlockingQueue<Integer> queue;
+
+    public Consumer(BlockingQueue<Integer> queue) {
+        this.queue = queue;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                Integer value = queue.take(); // Blocks if the queue is empty
+                System.out.println(Thread.currentThread().getName() + " consuming: " + value);
+                Thread.sleep(1000); // Simulate some work
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.out.println(Thread.currentThread().getName() + " interrupted.");
+                break; // Exit loop if interrupted
+            }
+        }
+    }
+}
+
+public class BlockingQueueExample {
+    public static void main(String[] args) throws InterruptedException {
+        // Create an ArrayBlockingQueue with a capacity of 5
+        BlockingQueue<Integer> sharedQueue = new ArrayBlockingQueue<>(5);
+
+        // Create producer and consumer threads
+        Thread producerThread1 = new Thread(new Producer(sharedQueue, 100), "Producer-1");
+        Thread producerThread2 = new Thread(new Producer(sharedQueue, 200), "Producer-2");
+        Thread consumerThread1 = new Thread(new Consumer(sharedQueue), "Consumer-1");
+        Thread consumerThread2 = new Thread(new Consumer(sharedQueue), "Consumer-2");
+
+
+        // Start the threads
+        producerThread1.start();
+        producerThread2.start();
+        consumerThread1.start();
+        consumerThread2.start();
+
+        // Give some time for threads to execute
+        Thread.sleep(7000);
+
+        // Interrupt consumers to stop them (they would otherwise run indefinitely)
+        consumerThread1.interrupt();
+        consumerThread2.interrupt();
+
+        System.out.println("Main thread finished.");
+    }
+}
+```
+
+**Partial Output (will vary due to thread scheduling):**
+
+```
+Producer-1 producing: 100
+Consumer-1 consuming: 100
+Producer-2 producing: 200
+Producer-1 producing: 101
+Consumer-2 consuming: 200
+Producer-2 producing: 201
+Producer-1 producing: 102
+Consumer-1 consuming: 101
+Producer-2 producing: 202
+Producer-1 producing: 103
+Consumer-2 consuming: 201
+Producer-2 producing: 203
+Producer-1 producing: 104
+Consumer-1 consuming: 102
+Consumer-2 consuming: 202
+Consumer-1 consuming: 103
+Consumer-2 consuming: 203
+Consumer-1 consuming: 104
+Consumer-1 interrupted.
+Consumer-2 interrupted.
+Main thread finished.
+```
+
+In this output, you can observe:
+
+* Producers add elements, and consumers remove them.
+* When the queue is full (capacity 5), producers will pause (`put()` blocks) until a consumer removes an element.
+* When the queue is empty, consumers will pause (`take()` blocks) until a producer adds an element.
+* Multiple producers and consumers can safely interact with the shared queue.
+
+### When to Use Which:
+
+* **`PriorityQueue`**:
+    * When you need to process elements based on their priority, not their insertion order.
+    * When you are in a single-threaded environment or you are handling synchronization yourself (e.g., using `Collections.synchronizedList`).
+    * Examples: Task scheduling where higher-priority tasks need to be executed first, event queues in simulations, A* search algorithm.
+
+* **`BlockingQueue` (and its implementations like `ArrayBlockingQueue`, `LinkedBlockingQueue`, `PriorityBlockingQueue`)**:
+    * When you are dealing with concurrent access from multiple threads (producer-consumer patterns).
+    * When you need threads to block and wait for elements to be available or for space to become available.
+    * When you need a thread-safe, robust solution for inter-thread communication.
+    * `PriorityBlockingQueue` specifically combines the thread-safety and blocking behavior of `BlockingQueue` with the priority-based ordering of `PriorityQueue`.
+    * Examples: Thread pools, message queues, work stealing patterns, data processing pipelines.
+
+Understanding the difference between `PriorityQueue` (non-thread-safe, priority-based) and `BlockingQueue` (thread-safe, blocking operations) is crucial for writing efficient and correct concurrent Java applications.

@@ -2,3 +2,60 @@
 Mongodb sherding
 Mongotemplate vs mongo repository
 Mongodb replicas
+
+
+-------------------------
+
+
+q1)
+
+A **clustered index** and a **non-clustered index** are two types of indexes used in databases to optimize query performance. Here’s how they differ:
+
+### **Clustered Index**
+- **Defines the physical order** of data in a table.
+- The actual table data is stored in the order of the indexed column.
+- **Only one clustered index** can exist per table.
+- **Faster for range-based queries** and sorting operations.
+
+**Example:**
+```sql
+CREATE TABLE Employees (
+    ID INT PRIMARY KEY,  -- Primary key automatically creates a clustered index
+    Name VARCHAR(100),
+    Salary DECIMAL(10,2)
+);
+```
+Here, the `ID` column is a **clustered index**, meaning the table data is physically sorted by `ID`.
+
+### **Non-Clustered Index**
+- Stores index separately from the actual table data.
+- **Multiple non-clustered indexes** can exist per table.
+- **Faster for specific lookups** but slower for range queries.
+
+**Example:**
+```sql
+CREATE NONCLUSTERED INDEX idx_salary ON Employees(Salary);
+```
+This creates a **non-clustered index** on the `Salary` column, allowing faster searches for employees based on salary.
+
+For a deeper comparison, check out [this guide](https://www.geeksforgeeks.org/difference-between-clustered-and-non-clustered-index/) or [this tutorial](https://www.guru99.com/clustered-vs-non-clustered-index.html). Let me know if you need more details!
+
+
+
+------------------------------------------------------------------------------------------
+
+
+Q2) internal working of index
+
+How Indexing Speeds Up Queries
+- Without an index, a query like:
+SELECT * FROM employees WHERE last_name = 'Smith';
+- would require scanning every row (O(n) complexity).
+- With an index, the database directly finds the relevant rows using a pointer (O(log n) complexity for B-Trees, O(1) for Hash Indexes).
+3. Index Lookup Process- The database searches the index instead of scanning the table.
+- The index contains key-value pairs (column values mapped to row locations).
+- Once the key is f
+
+
+-----------------------------------------------------------------------------------------------------------------------
+

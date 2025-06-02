@@ -18,10 +18,15 @@ Gradle is more of project life cycle manager with settings.gradle,gradlewrapper 
 Gradle don’t need installation – wrapper is doing the job
 
 
-
+-----------------------------------------------------------------------------------------
 
 DESIGN PATTERNS
+1)Creational Pattern -- singleton , factory
+2)Structural PAttern - - Decarator Pattern , Adaptor Pattern
 
+3)Behavioural PAttern --Observer Pattern ,Strategy PAttern
+--------------------------------------------------------------------------------------------------------------------------------
+DESIGN Principle
 SOLID principle
 S- single responsibility – to the point
 O- open closed  open for extension closed for modification

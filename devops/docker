@@ -87,14 +87,6 @@ services:
 ### **🛑 Step 3: Stop and Remove Containers**
 - **Stop the running containers**:
   ```sh
-  docker-compose down
-  ```
-- This **removes all containers** and associated networks.
-
----
-
-
-
 
     =============================================================----------------------------------------------------
 

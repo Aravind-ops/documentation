@@ -56,8 +56,18 @@ inside websecurityadaptor config
 
 
 How to configure cors for both javascript & rest api
+---------------------------------------------------=====================================================================
+3)what is preflight request?
 
-what is preflight request?
+
+3. Handling Preflight Requests (OPTIONS Method)
+Browsers send preflight requests before actual requests when dealing with CORS. Spring Boot handles them automatically, but you can explicitly allow OPTIONS requests:
+registry.addMapping("/**")
+    .allowedOrigins("*")
+    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+
+
+
 
 
     --------------------------------------------------------------------------------------------------------------

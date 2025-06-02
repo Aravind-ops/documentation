@@ -50,6 +50,10 @@ index = hashCode(key) & (n-1).
 Initial Load=16
 Threshold=12;
 Resizing value=.75*16=12
+
+Custom load factor & initial load
+
+new HashMap<>(iniitialLoad,laodfactor)
 A bucket is one element of HashMap array. It is used to store nodes
 
 Node in a hashmap has
@@ -260,5 +264,45 @@ Key Differences
 Fail-Fast: Operates directly on the collection, throws ConcurrentModificationException on modification, faster, suitable for single-threaded environments.
 Fail-Safe: Operates on a clone of the collection, does not throw exceptions on modification, slower, suitable for multi-threaded environments12.
 Would you like more details on any specific aspect of these iterators?
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------
+
+
+In Java, **segmentation in HashMap** was primarily used in older implementations of **ConcurrentHashMap** to
+ improve performance in multi-threaded environments. However, in **Java 8 and later**, segmentation was replaced with a more efficient approach using **CAS (Compare-And-Swap) operations**.
+
+### **How Segmentation Worked in Older Versions**
+- **ConcurrentHashMap** used **segments**, which were essentially smaller independent HashMaps.
+- Each segment had its own lock, allowing multiple threads to modify different segments simultaneously.
+- The number of segments was determined by the **concurrency level** (default: 16).
+- This approach reduced contention compared to a fully synchronized HashMap.
+
+### **Modern Approach (Java 8+)**
+- Instead of segments, Java 8 introduced **Node-based locking** and **CAS operations**.
+- Each bucket in the HashMap is now a linked list or a balanced tree (for large buckets).
+- **Fine-grained synchronization** ensures better performance without segment-based locking.
+
+### **Example: ConcurrentHashMap Usage**
+```java
+ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+map.put("A", 1);
+map.put("B", 2);
+System.out.println(map.get("A"));
+```
+This implementation allows multiple threads to access and modify the map efficiently.
+
+For a deeper dive into segmentation and its evolution, check out [this guide](https://www.geeksforgeeks.org/concurrenthashmap-in-java/) or [this discussion](https://stackoverflow.com/questions/39997574/in-concurrenthashmap-how-the-segments-are-defined). Let me know if you need more details!
+
 
 
