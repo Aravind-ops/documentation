@@ -70,6 +70,21 @@ obj=null; pointed to null memory -->eligible for GC
 
 5)invoking gc internally call finalize() method before deleting object-- default implementation is empty
 
+6)Example: JVM Garbage Collection Process
+  - New objects are allocated in Eden Space.--> survivor space --> old gen
+  - When Eden fills up, Minor GC moves surviving objects to Survivor Spaces.
+  - Objects that persist through multiple Minor GCs are promoted to the Old Generation.
+
+
+Comparison Table
+| Reference Type | Garbage Collection Timing | Use Case |
+| Soft | When memory is low | Caching |
+| Weak | When no strong references exist | WeakHashMap |
+| Phantom | After finalization | Resource cleanup |
+
+
+
+
 
 
 --------------------------------------------------------------------------------------------------------

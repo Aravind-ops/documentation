@@ -100,6 +100,40 @@ Here equals methods helps to get exact value for the key though it has same hash
 When getting an object with its key, the linked list is traversed until the key matches or null is found on next field.
 
 
+
+
+
+to find the same hash code values.
+What Happens During Rehashing?
+- Capacity Doubling → The HashMap increases its size (usually doubling).
+- Recomputing Hash Codes → Each existing key gets rehashed using the new array size.
+- Redistribution → Entries get new bucket locations based on the updated hash function.
+Why Hash Codes May Change?
+- A hash code depends on the array size in many implementations.
+- When the array size changes, the same key could get a different hash code.
+- This helps spread entries more evenly, reducing collisions.
+
+
+
+
+How HashMap Internally Works:
+- Array-Based Storage → A HashMap maintains an array, but each index (or bucket) can contain multiple nodes due to hash collisions.
+- Linked List or Tree for Collisions → If multiple keys hash to the same bucket, they are linked either as:
+- Linked List (for smaller collisions).
+- Red-Black Tree (if the bucket grows beyond a threshold).
+- Dynamic Resizing → Unlike ArrayList, which grows linearly,
+a HashMap doubles its size when crossing the load factor threshold, requiring rehashing to redistribute elements.
+Comparison with ArrayList:
+| Feature | ArrayList | HashMap |
+| Structure | Dynamic array | Array of buckets |
+| Access Time | O(1) (random access) | O(1) (best case), O(n) (worst case) |
+| Collisions Handling | N/A (index-based) | Linked list/tree-based |
+| Resizing | Linear growth | Doubling & rehashing |
+
+
+
+
+
 HashSet
 
 HAshset internally uses hashmap

@@ -131,4 +131,12 @@ hers. The four main isolation levels are:
     @Transactional(isolation = Isolation.READ_COMMITTED)
 
 
+The key difference between Repeatable Read and Read Committed isolation levels lies in how they handle concurrent transactions:
+- Read Committed: Ensures that a transaction only reads committed data, preventing dirty reads. However, it does not prevent non-repeatable reads, meaning if a transaction reads the same row twice, another transaction might modify it in between, leading to different results.
+- Repeatable Read: Provides a higher level of isolation by preventing non-repeatable reads. Once a transaction reads a row, no other transaction can modify it until the first transaction completes. However, phantom reads (new rows being added by other transactions) can still occur.
+In short, Repeatable Read offers stronger consistency guarantees than Read Committed, but it does not fully prevent all concurrency issues.
+
+
+
+
 Q13)Propgation types in Q9

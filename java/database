@@ -59,3 +59,38 @@ SELECT * FROM employees WHERE last_name = 'Smith';
 
 -----------------------------------------------------------------------------------------------------------------------
 
+Q3) caching in hibernate
+
+L1 cache - managed at session object level , cleared for new session , enabled by default
+
+L2 Cache -- not provided by hibernate -- need to integrate with third party libraries
+
+
+     EhCahe
+
+     <hibernate-configuration>
+         <session-factory>
+             <property name="hibernate.cache.use_second_level_cache">true</property>
+             <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+         </session-factory>
+     </hibernate-configuration>
+
+
+     @Entity
+     @Cacheable
+     @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+     public class Employee {
+         @Id
+         @GeneratedValue(strategy = GenerationType.IDENTITY)
+         private Long id;
+
+         private String name;
+     }
+
+     ---------------------------------------------------------
+     Q4)
+
+     The key difference between Repeatable Read and Read Committed isolation levels lies in how they handle concurrent transactions:
+     - Read Committed: Ensures that a transaction only reads committed data, preventing dirty reads. However, it does not prevent non-repeatable reads, meaning if a transaction reads the same row twice, another transaction might modify it in between, leading to different results.
+     - Repeatable Read: Provides a higher level of isolation by preventing non-repeatable reads. Once a transaction reads a row, no other transaction can modify it until the first transaction completes. However, phantom reads (new rows being added by other transactions) can still occur.
+     In short, Repeatable Read offers stronger consistency guarantees than Read Committed, but it does not fully prevent all concurrency issues.
